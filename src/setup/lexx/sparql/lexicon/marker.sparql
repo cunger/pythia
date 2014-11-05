@@ -1,0 +1,6 @@
+SELECT DISTINCT ?marker WHERE { 
+
+   <URI> <http://lemon-model.net/lemon#marker> ?m . 
+   ?m <http://lemon-model.net/lemon#canonicalForm> ?f . 
+   ?f <http://lemon-model.net/lemon#writtenRep> ?marker . 
+}

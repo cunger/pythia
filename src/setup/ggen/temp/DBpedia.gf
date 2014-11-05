@@ -1,0 +1,1 @@
+abstract DBpedia = Domain, QuestionAnswering ** { flags startcat=Utterance_Utt; }  ; 

@@ -1,0 +1,9 @@
+SELECT DISTINCT ?comparative WHERE { 
+ 
+   { <URI> <http://lemon-model.net/lemon#canonicalForm> ?form . }
+   UNION
+   { <URI> <http://lemon-model.net/lemon#otherForm> ?form . } 
+
+   ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#degree> <http://www.lexinfo.net/ontology/2.0/lexinfo#comparative> .  
+   ?form <http://lemon-model.net/lemon#writtenRep> ?comparative . 
+}

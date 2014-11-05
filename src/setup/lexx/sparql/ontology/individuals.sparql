@@ -1,0 +1,39 @@
+SELECT DISTINCT ?uri WHERE {
+	
+	{ ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> . }
+    UNION 
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?c .
+      { ?c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> . }
+	  UNION
+	  { ?c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> . }
+	  UNION
+      { ?c <http://www.w3.org/2002/07/owl#complementOf> ?x . }
+      UNION
+      { ?c <http://www.w3.org/2002/07/owl#unionOf> ?x . }
+      UNION
+      { ?c <http://www.w3.org/2002/07/owl#intersectionOf> ?x . }
+      UNION
+      { ?c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> . }
+	  
+	  UNION
+	
+	  { ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?c . }
+	  UNION 
+	  { ?x <http://www.w3.org/2000/01/rdf-schema#domain> ?c . }
+	  UNION 
+	  { ?x <http://www.w3.org/2000/01/rdf-schema#range> ?c . }
+
+	  FILTER (  !REGEX(STR(?c),"http://www.w3.org/2002/07/owl#") 
+	         && !REGEX(STR(?c),"http://www.w3.org/2000/01/rdf-schema#")
+	         && !REGEX(STR(?c),"http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+	         && !REGEX(STR(?c),"http://www.w3.org/2001/XMLSchema#")
+               && !REGEX(STR(?c),"http://lemon-model.net/lemon#")
+               && !REGEX(STR(?c),"http://www.lexinfo.net/ontology/2.0/lexinfo#") ) }
+
+	FILTER (  !REGEX(STR(?uri),"http://www.w3.org/2002/07/owl#") 
+	       && !REGEX(STR(?uri),"http://www.w3.org/2000/01/rdf-schema#")
+	       && !REGEX(STR(?uri),"http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+	       && !REGEX(STR(?uri),"http://www.w3.org/2001/XMLSchema#")
+               && !REGEX(STR(?uri),"http://lemon-model.net/lemon#")
+               && !REGEX(STR(?uri),"http://www.lexinfo.net/ontology/2.0/lexinfo#") )
+}

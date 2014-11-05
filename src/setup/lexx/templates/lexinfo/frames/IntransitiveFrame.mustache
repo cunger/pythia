@@ -1,0 +1,8 @@
+{ "lin":  [ {{^statement}}
+            "{{mkCat}} (mkVP {{canonicalFormIdentifier}}_V)"
+            {{/statement}}
+            {{#statement}}
+            "mkCl {{subject.name}}.np (mkVP {{canonicalFormIdentifier}}_V)"
+            {{/statement}} ],
+  "oper": [ "{{canonicalFormIdentifier}}_V = {{> verb}}" ]
+}

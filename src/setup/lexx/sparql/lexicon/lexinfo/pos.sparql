@@ -1,0 +1,8 @@
+SELECT DISTINCT ?uri WHERE { 
+
+  { <URI> <http://www.lexinfo.net/ontology/2.0/lexinfo#partOfSpeech> ?uri . }
+  UNION 
+  { <URI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?uri . }
+
+  FILTER (!REGEX(STR(?uri),"http://lemon-model.net/lemon#LexicalEntry"))
+}

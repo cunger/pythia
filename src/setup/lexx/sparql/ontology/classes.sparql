@@ -1,0 +1,29 @@
+SELECT DISTINCT ?uri WHERE {
+	
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> . }
+    UNION
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> . }
+    UNION
+    { ?uri <http://www.w3.org/2002/07/owl#complementOf> ?x . }
+    UNION
+    { ?uri <http://www.w3.org/2002/07/owl#unionOf> ?x . }
+    UNION
+    { ?uri <http://www.w3.org/2002/07/owl#intersectionOf> ?x . }
+    UNION
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> . }
+
+    UNION
+
+    { ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?uri . }
+    UNION 
+    { ?x <http://www.w3.org/2000/01/rdf-schema#domain> ?uri . }
+    UNION 
+    { ?x <http://www.w3.org/2000/01/rdf-schema#range> ?uri . }
+
+    FILTER (  !REGEX(STR(?uri),"http://www.w3.org/2002/07/owl#") 
+	   && !REGEX(STR(?uri),"http://www.w3.org/2000/01/rdf-schema#")
+	   && !REGEX(STR(?uri),"http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+	   && !REGEX(STR(?uri),"http://www.w3.org/2001/XMLSchema#")
+           && !REGEX(STR(?uri),"http://lemon-model.net/lemon#")
+           && !REGEX(STR(?uri),"http://www.lexinfo.net/ontology/2.0/lexinfo#") )
+}

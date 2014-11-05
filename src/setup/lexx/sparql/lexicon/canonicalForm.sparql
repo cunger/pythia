@@ -1,0 +1,4 @@
+SELECT DISTINCT ?canonicalForm WHERE { 
+   <URI> <http://lemon-model.net/lemon#canonicalForm> ?form . 
+   ?form <http://lemon-model.net/lemon#writtenRep> ?canonicalForm . 
+}

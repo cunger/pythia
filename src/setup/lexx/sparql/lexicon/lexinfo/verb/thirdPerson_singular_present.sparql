@@ -1,0 +1,11 @@
+SELECT DISTINCT ?thirdPerson_singular_present WHERE { 
+
+  { <URI> <http://lemon-model.net/lemon#canonicalForm> ?form . } 
+  UNION 
+  { <URI> <http://lemon-model.net/lemon#otherForm> ?form . } 
+ 
+  ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#person> <http://www.lexinfo.net/ontology/2.0/lexinfo#thirdPerson> . 
+  ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#number> <http://www.lexinfo.net/ontology/2.0/lexinfo#singular> . 
+  ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#tense> <http://www.lexinfo.net/ontology/2.0/lexinfo#present> . 
+  ?form <http://lemon-model.net/lemon#writtenRep> ?thirdPerson_singular_present . 
+}

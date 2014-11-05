@@ -1,0 +1,1 @@
+SELECT DISTINCT ?gender WHERE { <URI> <http://www.lexinfo.net/ontology/2.0/lexinfo#gender> ?gender . }

@@ -1,0 +1,13 @@
+SELECT DISTINCT ?onProperty ?hasValue ?allValuesFrom ?someValuesFrom ?cardinality ?minCardinality ?maxCardinality WHERE {
+	
+    <URI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+    
+    <URI> <http://www.w3.org/2002/07/owl#onProperty> ?onProperty .
+    
+    OPTIONAL {  <URI> <http://www.w3.org/2002/07/owl#hasValue>       ?hasValue .  }
+    OPTIONAL {  <URI> <http://www.w3.org/2002/07/owl#allValuesFrom>  ?allValuesFrom .  }
+    OPTIONAL {  <URI> <http://www.w3.org/2002/07/owl#someValuesFrom> ?someValuesFrom .  }
+    OPTIONAL {  <URI> <http://www.w3.org/2002/07/owl#cardinality>    ?cardinality .  }
+    OPTIONAL {  <URI> <http://www.w3.org/2002/07/owl#minCardinality> ?minCardinality .  }
+    OPTIONAL {  <URI> <http://www.w3.org/2002/07/owl#maxCardinality> ?maxCardinality .  }
+}

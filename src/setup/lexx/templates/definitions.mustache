@@ -1,0 +1,25 @@
+(ns core.definitions.Domain
+  (:require [core.data.LambdaRDF])
+  (:import  [core.data.LambdaRDF Term Sel Triple Not And Or Condition Filter Quant]))
+
+{{#predicate}}
+(declare {{identifier}})
+{{/predicate}}
+{{#relation}}
+(declare {{identifier}})
+{{/relation}}
+{{#entity}}
+(declare {{identifier}})
+{{/entity}}
+
+{{#predicate}}
+{{#definition}}{{{.}}}{{/definition}}
+{{/predicate}}
+
+{{#relation}}
+{{#definition}}{{{.}}}{{/definition}}
+{{/relation}}
+
+{{#entity}}
+{{#definition}}{{{.}}}{{/definition}}
+{{/entity}}

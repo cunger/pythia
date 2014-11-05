@@ -1,0 +1,33 @@
+SELECT DISTINCT ?frame ?subject ?copulativeArg ?directObject ?indirectObject ?complement ?prepositionalObject ?prepositionalAdjunct ?possessiveAdjunct ?comparativeAdjunct ?superlativeAdjunct WHERE {  
+
+ <URI> <http://lemon-model.net/lemon#synBehavior> ?syn .
+
+ ?syn <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?frame . 
+ FILTER (!REGEX(STR(?frame),"http://lemon-model.net/lemon#Frame"))
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#subject>              ?subject . } 
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeSubject>    ?copulativeArg . } 
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#copulativeArg>        ?copulativeArg . } 
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#attributiveArg>       ?copulativeArg . }
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#directObject>         ?directObject . }
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#indirectObject>       ?indirectObject . }
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#complement>           ?complement . }
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#adverbialComplement>  ?complement . }
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalAdjunct> ?prepositionalAdjunct . }
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject>  ?prepositionalAdjunct . 
+            ?prepositionalAdjunct <http://lemon-model.net/lemon#optional> "true" . }
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#prepositionalObject>  ?prepositionalObject .
+            MINUS { ?prepositionalObject <http://lemon-model.net/lemon#optional> "true" . } }
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#adpositionalObject>   ?prepositionalObject . }
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#possessiveAdjunct>    ?possessiveAdjunct . }
+
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#comparativeAdjunct>   ?comparativeAdjunct . }
+ OPTIONAL { ?syn <http://www.lexinfo.net/ontology/2.0/lexinfo#superlativeAdjunct>   ?superlativeAdjunct . }
+}

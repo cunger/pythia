@@ -1,0 +1,6 @@
+SELECT DISTINCT ?otherForm WHERE { 
+
+   <URI> <http://lemon-model.net/lemon#otherForm> ?form .
+   ?form <http://lemon-model.net/lemon#writtenRep> ?otherForm . 
+
+}

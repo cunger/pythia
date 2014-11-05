@@ -1,0 +1,8 @@
+SELECT ?uri WHERE {
+	
+	{ <URI> <http://www.w3.org/2002/07/owl#propertyChain> ?list . }
+	UNION
+	{ <URI> <http://www.w3.org/2002/07/owl#propertyChainAxiom> ?list . }
+
+	?list <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>*/<http://www.w3.org/1999/02/22-rdf-syntax-ns#first> ?uri .
+}

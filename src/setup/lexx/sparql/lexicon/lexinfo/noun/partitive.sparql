@@ -1,0 +1,10 @@
+SELECT DISTINCT ?partitive WHERE { 
+
+   { <URI> <http://lemon-model.net/lemon#canonicalForm> ?form . }
+   UNION
+   { <URI> <http://lemon-model.net/lemon#otherForm> ?form . } 
+
+   ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#number> <http://www.lexinfo.net/ontology/2.0/lexinfo#singular> .  
+   ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#case> <http://www.lexinfo.net/ontology/2.0/lexinfo#partitiveCase> .  
+   ?form <http://lemon-model.net/lemon#writtenRep> ?partitive .  
+}

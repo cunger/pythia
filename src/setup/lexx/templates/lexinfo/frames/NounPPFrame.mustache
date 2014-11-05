@@ -1,0 +1,8 @@
+{ "lin":  [ {{^statement}}
+            "{{mkCat}} (mkN2 {{canonicalFormIdentifier}}_N (mkPrep \"{{prepositionalArg.marker}}\")) {{reverse}}"
+            {{/statement}}
+            {{#statement}}
+            "mkCl {{copulativeArg.name}}.np {{#prepositionalArg}}(mkCN {{/prepositionalArg}}(mkCN {{canonicalFormIdentifier}}_N){{#prepositionalArg}} (Constructors{{language}}.mkAdv (mkPrep \"{{marker}}\") {{name}}.np)){{/prepositionalArg}}"{{/statement}} 
+            {{/statement}} ],
+  "oper": [ "{{canonicalFormIdentifier}}_N = {{> noun}}" ]
+}

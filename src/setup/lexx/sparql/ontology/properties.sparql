@@ -1,0 +1,26 @@
+SELECT DISTINCT ?uri WHERE { 
+
+	{ ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> . }
+	UNION
+	{ ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> . }
+	UNION
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> . }
+    UNION
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> . }
+    UNION 
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#TransitiveProperty> . }
+    UNION
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#SymmetricProperty> . }
+    UNION
+    { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#InverseFunctionalProperty> . }
+    
+    UNION
+    
+    { ?x <http://www.w3.org/2002/07/owl#onProperty> ?uri . }
+
+	FILTER (  !REGEX(STR(?uri),"http://www.w3.org/2002/07/owl#") 
+	       && !REGEX(STR(?uri),"http://www.w3.org/2000/01/rdf-schema#")
+	       && !REGEX(STR(?uri),"http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+               && !REGEX(STR(?uri),"http://lemon-model.net/lemon#")
+               && !REGEX(STR(?uri),"http://www.lexinfo.net/ontology/2.0/lexinfo#") )
+}

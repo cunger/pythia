@@ -1,0 +1,8 @@
+{ "lin":  [ {{^statement}}
+            "{{mkCat}} (mkAP {{canonicalFormIdentifier}}_A)"
+            {{/statement}}
+            {{#statement}}
+            "mkCl {{copulativeArg.name}}.np (mkAP {{canonicalFormIdentifier}}_A)"
+            {{/statement}} ], 
+  "oper": [ "{{canonicalFormIdentifier}}_A = {{> adjective}}" ] 
+}

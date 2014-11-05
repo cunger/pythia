@@ -1,0 +1,10 @@
+{ "lin":  [ {{^statement}}
+            "{{mkCat}} (mkN2 {{canonicalFormIdentifier}}_N) {{reverse}}",
+            "{{mkCat}} (mkN2 {{canonicalFormIdentifier}}_N possess_Prep) {{reverse}}"
+            {{/statement}}
+            {{#statement}}
+            "mkCl {{copulativeArg.name}}.np (mkCN {{#possessiveAdjunct}}(mkN2 {{canonicalFormIdentifier}}_N) {{name}}.np{{/possessiveAdjunct}}{{^possessiveAdjunct}}{{canonicalFormIdentifier}}_N{{/possessiveAdjunct}})",
+            "mkCl {{copulativeArg.name}}.np (mkCN {{#possessiveAdjunct}}(mkN2 {{canonicalFormIdentifier}}_N possess_Prep) {{name}}.np{{/possessiveAdjunct}}{{^possessiveAdjunct}}{{canonicalFormIdentifier}}_N{{/possessiveAdjunct}})"
+            {{/statement}} ],
+  "oper": [ "{{canonicalFormIdentifier}}_N = {{> noun}}" ]
+}

@@ -1,0 +1,1 @@
+SELECT DISTINCT ?uri WHERE { <URI> <http://lemon-model.net/lemon#entry> ?uri . }

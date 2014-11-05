@@ -1,0 +1,7 @@
+SELECT DISTINCT ?uri WHERE { 
+
+  { ?uri <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://lemon-model.net/lemon#Lexicon> . }
+  UNION
+  { ?uri <http://lemon-model.net/lemon#entry> ?x . }
+
+}

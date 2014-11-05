@@ -1,0 +1,11 @@
+
+Reasoner 
+
+- (modify ...) should check whether the two predicates are compatible w.r.t. the ontology
+- Oracle of Delphi: (Sel. ...) resulting from has/with
+- rank possible instantiations
+
+
+Grammar 
+
+- "without" as negation of with_Rel

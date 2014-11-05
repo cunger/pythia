@@ -1,0 +1,35 @@
+{{=(( ))=}}
+
+abstract Domain = Core ** {
+
+ fun
+
+
+  ---- Classes ---------------------
+
+  ((#predicate))
+   ((identifier)) : Predicate;
+  ((/predicate))
+
+
+  ---- Properties -------------------
+
+  ((#relation))
+   ((identifier)) : Relation;
+  ((/relation))
+
+
+  ---- Statements -------------------
+
+  ((#statement))
+    ((identifier)) : ((#args))Entity -> ((/args)) Statement;
+  ((/statement))
+
+
+  ---- Individuals ------------------
+
+  ((#entity))
+   ((identifier)) : Entity; 
+  ((/entity))
+
+}

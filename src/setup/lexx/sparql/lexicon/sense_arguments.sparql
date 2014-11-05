@@ -1,0 +1,7 @@
+SELECT DISTINCT ?isA ?subjOfProp ?objOfProp WHERE {
+
+ OPTIONAL { <URI> <http://lemon-model.net/lemon#isA> ?isA . } 
+ OPTIONAL { <URI> <http://lemon-model.net/lemon#subjOfProp> ?subjOfProp . }
+ OPTIONAL { <URI> <http://lemon-model.net/lemon#objOfProp> ?objOfProp . }
+
+}

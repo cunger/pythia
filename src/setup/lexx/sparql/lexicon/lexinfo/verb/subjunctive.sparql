@@ -1,0 +1,10 @@
+SELECT DISTINCT ?subjunctive WHERE { 
+
+  { <URI> <http://lemon-model.net/lemon#canonicalForm> ?form . } 
+  UNION 
+  { <URI> <http://lemon-model.net/lemon#otherForm> ?form . } 
+ 
+  ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#verbFormMood> <http://www.lexinfo.net/ontology/2.0/lexinfo#subjunctive> .     
+  ?form <http://lemon-model.net/lemon#writtenRep> ?subjunctive .
+
+}

@@ -1,0 +1,1 @@
+SELECT DISTINCT ?l WHERE { <URI> <http://lemon-model.net/lemon#language> ?l . }

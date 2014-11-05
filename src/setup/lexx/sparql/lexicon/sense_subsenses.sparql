@@ -1,0 +1,5 @@
+SELECT DISTINCT ?uri WHERE { 
+
+  <URI> <http://lemon-model.net/lemon#subsense> ?uri . 
+
+}

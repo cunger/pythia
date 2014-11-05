@@ -1,0 +1,1 @@
+SELECT DISTINCT ?optional WHERE { <URI> <http://lemon-model.net/lemon#optional> ?optional . }

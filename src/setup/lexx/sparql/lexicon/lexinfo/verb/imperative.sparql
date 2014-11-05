@@ -1,0 +1,10 @@
+SELECT DISTINCT ?imperative WHERE { 
+
+  { <URI> <http://lemon-model.net/lemon#canonicalForm> ?form . } 
+  UNION 
+  { <URI> <http://lemon-model.net/lemon#otherForm> ?form . } 
+ 
+  ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#aspect> <http://www.lexinfo.net/ontology/2.0/lexinfo#imperative> .     
+  ?form <http://lemon-model.net/lemon#writtenRep> ?imperative .
+
+}

@@ -1,0 +1,10 @@
+SELECT DISTINCT ?positive_plural WHERE { 
+ 
+   { <URI> <http://lemon-model.net/lemon#canonicalForm> ?form . }
+   UNION
+   { <URI> <http://lemon-model.net/lemon#otherForm> ?form . } 
+
+   ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#degree> <http://www.lexinfo.net/ontology/2.0/lexinfo#positive> .  
+   ?form <http://www.lexinfo.net/ontology/2.0/lexinfo#number> <http://www.lexinfo.net/ontology/2.0/lexinfo#plural> .
+   ?form <http://lemon-model.net/lemon#writtenRep> ?positive_plural . 
+}
