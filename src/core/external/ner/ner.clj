@@ -9,7 +9,7 @@
 ;; Main 
 
 (defn recognize [input]
-  (let [entities  (spotlight/get-entities input)
+  (let [entities  (spotlight/filter-entities (spotlight/get-entities input))
         new-input (replace-entities input entities 1 0)]
     (if (empty? entities)
         input

@@ -24,5 +24,4 @@
         is       (distinct (for [[t i] t_i] i))                 
         i_ts     (for [i is] {:sem i :asts (filter (fn [t] (some #(= [t i] %) t_i)) trees) :lang language})] 
         ; Return 
-        (println ">>>>>" i_ts) ; DEBUG
         i_ts))

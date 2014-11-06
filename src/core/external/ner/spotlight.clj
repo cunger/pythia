@@ -28,6 +28,11 @@
         
         [])))
 
+(defn filter-entities [entities]
+  (remove #(or (empty? (:types %))
+               (some #{"http://dbpedia.org/ontology/TopicalConcept"} (:types %)))
+          entities))
+
 ;; Aux
 
 (defn most-general-type [entity] (clojure.string/replace (last (:types entity)) "http://dbpedia.org/ontology/" ""))
