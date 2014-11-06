@@ -74,8 +74,8 @@
       (if-not (empty? asts)
         (println "\n " (apply min-key count asts))
         (println "\n None.")) 
-    ; (println "\n* Semantic expression:")
-    ; (println "\n " (show sem))
+      (println "\n* Semantic expression:")
+      (println "\n " (show sem))
       (println "\n* RDF/SPARQL:")
       (if sem 
         (println "\n " (sparqlize sem))

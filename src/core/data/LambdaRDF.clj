@@ -113,7 +113,7 @@
 
 
 ;; Extending Expr to nil
-;; (extend-type nil Expr (show [_] "") (sparql [_] ""))
+(extend-type nil Expr (show [_] "nil") (sparql [_] "nil"))
 
 
 ;;;; Fresh variable supply ;;;;

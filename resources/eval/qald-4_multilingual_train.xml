@@ -201,6 +201,7 @@ WHERE {
         ?uri rdf:type dbo:Mountain . 
         ?uri dbo:elevation ?elevation . 
 } 
+GROUP BY ?uri
 ORDER BY DESC(?elevation) 
 OFFSET 1 LIMIT 1 
 ]]>
@@ -408,6 +409,7 @@ WHERE {
         ?uri rdf:type dbo:FormulaOneRacer . 
         ?uri dbo:races ?x . 
 } 
+GROUP BY ?uri
 ORDER BY DESC(?x) 
 OFFSET 0 LIMIT 1 
 ]]>
@@ -466,7 +468,9 @@ WHERE {
         ?uri dbo:team ?x . 
         ?x dbo:league res:Premier_League . 
         ?uri dbo:birthDate ?y . 
-} ORDER BY DESC(?y) 
+} 
+GROUP BY ?uri
+ORDER BY DESC(?y) 
 OFFSET 0 LIMIT 1 
 ]]>
 </query>
@@ -522,7 +526,9 @@ WHERE {
       { ?uri dbo:length ?l . } 
       UNION 
       { ?uri dbp:length ?l . } 
-} ORDER BY DESC(?l) 
+} 
+GROUP BY ?uri
+ORDER BY DESC(?l) 
 OFFSET 0 LIMIT 1 
 ]]>
 </query>
@@ -813,7 +819,9 @@ SELECT DISTINCT ?uri
 WHERE { 
         ?uri rdf:type yago:StatesOfTheUnitedStates . 
         ?uri dbp:admittancedate ?x . 
-} ORDER BY DESC(?x) 
+} 
+GROUP BY ?uri
+ORDER BY DESC(?x) 
 OFFSET 0 LIMIT 1 
 ]]>
 </query>
@@ -837,7 +845,7 @@ OFFSET 0 LIMIT 1
 <query><![CDATA[ 
 PREFIX dbo: <http://dbpedia.org/ontology/> 
 PREFIX res: <http://dbpedia.org/resource/> 
-SELECT COUNT(DISTINCT ?x) 
+SELECT (COUNT(DISTINCT ?x) AS ?c)
 WHERE { 
         res:Turkmenistan dbo:language ?x . 
 } ]]>
@@ -1021,7 +1029,7 @@ WHERE {
 <query><![CDATA[ 
 PREFIX dbo: <http://dbpedia.org/ontology/> 
 PREFIX res: <http://dbpedia.org/resource/> 
-SELECT COUNT(DISTINCT ?uri) 
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE { 
         res:Jane_Fonda dbo:spouse ?uri . 
 } ]]>
@@ -1838,7 +1846,7 @@ WHERE {
 <query><![CDATA[ 
 PREFIX dbo: <http://dbpedia.org/ontology/> 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
-SELECT COUNT(DISTINCT ?uri) 
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE { 
         ?uri rdf:type dbo:SpaceMission . 
 } ]]>
@@ -2174,7 +2182,7 @@ WHERE {
 <query><![CDATA[ 
 PREFIX res: <http://dbpedia.org/resource/> 
 PREFIX dbo: <http://dbpedia.org/ontology/> 
-SELECT COUNT(DISTINCT ?uri) 
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE { 
         res:Benjamin_Franklin dbo:child ?uri . 
 } ]]>
@@ -2919,6 +2927,7 @@ WHERE {
         ?x dbo:releaseDate ?y .
         ?x dbo:recordLabel ?uri .
 }
+GROUP BY ?uri
 ORDER BY ASC(?y) 
 OFFSET 0 LIMIT 1
 ]]></query>
@@ -3078,6 +3087,7 @@ WHERE {
         ?uri dbo:elevation ?otherelevation .
         FILTER (?otherelevation < ?elevation) .
 } 
+GROUP BY ?uri
 ORDER BY DESC(?otherelevation) 
 OFFSET 0 LIMIT 1
 ]]></query>
@@ -3270,6 +3280,7 @@ WHERE {
         ?uri rdf:type yago:StatesOfTheUnitedStates .
         ?uri dbp:densityrank ?rank .
 } 
+GROUP BY ?uri
 ORDER BY ASC(?rank) 
 OFFSET 0 LIMIT 1
 ]]></query>
@@ -3564,6 +3575,7 @@ WHERE {
         ?uri dbo:locatedInArea res:Australia .
         ?uri dbo:elevation ?elevation .
 } 
+GROUP BY ?uri
 ORDER BY DESC(?elevation) 
 OFFSET 0 LIMIT 1
 ]]></query>
@@ -3695,7 +3707,7 @@ PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX dbp: <http://dbpedia.org/property/>
 PREFIX res: <http://dbpedia.org/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT COUNT(DISTINCT ?uri)
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE { 	
         ?uri  rdf:type dbo:Organisation  .
       { ?uri dbo:industry res:Telecommunication . } 
@@ -3805,7 +3817,7 @@ PREFIX dbp: <http://dbpedia.org/property/>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX res: <http://dbpedia.org/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT COUNT(DISTINCT ?uri)
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE { 
         ?uri rdf:type dbo:Company  .
         ?uri dbp:industry ?industry . 
@@ -3832,7 +3844,7 @@ WHERE {
 <query><![CDATA[
 PREFIX yago: <http://dbpedia.org/class/yago/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT COUNT(DISTINCT ?uri) 
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE {
         ?uri rdf:type yago:EuropeanCountries .
 }
@@ -4068,6 +4080,7 @@ WHERE {
         ?film rdf:type dbo:Film .
         ?film dbo:producer ?uri .
 } 
+GROUP BY ?uri
 ORDER BY DESC(COUNT(?film)) 
 OFFSET 0 LIMIT 1
 ]]></query>
@@ -4613,7 +4626,7 @@ WHERE {
 <query><![CDATA[
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX res:  <http://dbpedia.org/resource/>
-SELECT COUNT(DISTINCT ?uri) 
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE {
         ?uri dbo:producer res:Hal_Roach .
 }
@@ -4790,6 +4803,7 @@ WHERE {
         ?uri rdf:type dbo:Country  .
         ?uri dbp:officialLanguages ?language .
 } 
+GROUP BY ?uri
 ORDER BY DESC(COUNT(?language)) 
 OFFSET 0 LIMIT 1
 ]]></query>
@@ -4974,7 +4988,7 @@ WHERE {
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX res: <http://dbpedia.org/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT COUNT(DISTINCT ?uri) 
+SELECT (COUNT(DISTINCT ?uri) AS ?c)
 WHERE {
         ?uri rdf:type dbo:Film .
         ?uri dbo:starring res:Leonardo_DiCaprio . 
@@ -5114,6 +5128,7 @@ WHERE {
         ?uri rdf:type dbo:Mountain  .
         ?uri dbo:elevation ?elevation .
 } 
+GROUP BY ?uri
 ORDER BY DESC(?elevation) 
 OFFSET 0 LIMIT 1
 ]]></query>

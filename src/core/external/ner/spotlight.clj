@@ -10,10 +10,10 @@
         (filter #(.startsWith % "DBpedia:") 
                  (clojure.string/split string #"\,"))))
 
-;; interface 
+;; Main 
 
 (defn get-entities [input]
-  (let [request  (str settings/ner-endpoint settings/ner-options (http/urlize input))
+  (let [request  (settings/ner-request (http/urlize input))
         response (http/get-response request identity)
         status   (:status response)
         body     (if-not (clojure.string/blank? (:body response)) (json/read-str (:body response)))]
@@ -28,6 +28,6 @@
         
         [])))
 
-;; aux
+;; Aux
 
 (defn most-general-type [entity] (clojure.string/replace (last (:types entity)) "http://dbpedia.org/ontology/" ""))

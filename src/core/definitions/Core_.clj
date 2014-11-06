@@ -67,15 +67,15 @@
 
 ; For NER 
 
-(def Entity1 (ner/resolve-entity :Entity1))
-(def Entity2 (ner/resolve-entity :Entity2))
-(def Entity3 (ner/resolve-entity :Entity3))
-(def Entity4 (ner/resolve-entity :Entity4))
-(def Entity5 (ner/resolve-entity :Entity5))
-(def Entity6 (ner/resolve-entity :Entity6))
-(def Entity7 (ner/resolve-entity :Entity7))
-(def Entity8 (ner/resolve-entity :Entity8))
-(def Entity9 (ner/resolve-entity :Entity9))
+(defn Entity1 [] (Term. :uri (ner/resolve-entity :Entity1)))
+(defn Entity2 [] (Term. :uri (ner/resolve-entity :Entity2)))
+(defn Entity3 [] (Term. :uri (ner/resolve-entity :Entity3)))
+(defn Entity4 [] (Term. :uri (ner/resolve-entity :Entity4)))
+(defn Entity5 [] (Term. :uri (ner/resolve-entity :Entity5)))
+(defn Entity6 [] (Term. :uri (ner/resolve-entity :Entity6)))
+(defn Entity7 [] (Term. :uri (ner/resolve-entity :Entity7)))
+(defn Entity8 [] (Term. :uri (ner/resolve-entity :Entity8)))
+(defn Entity9 [] (Term. :uri (ner/resolve-entity :Entity9)))
 
 ; For robust parsing
 
@@ -93,3 +93,19 @@
 (def possess_Rel (light_Rel []))
 (def in_Rel      (light_Rel [(Condition. :kind :location)]))
 (def in_Rel      (light_Rel [(Condition. :kind :origin)]))
+
+
+;;
+
+(defn constants-to-functions [string]
+  (let [replacements [ [#"Entity1" "(Entity1)"]
+                       [#"Entity2" "(Entity2)"]
+                       [#"Entity3" "(Entity3)"]
+                       [#"Entity4" "(Entity4)"]
+                       [#"Entity5" "(Entity5)"]
+                       [#"Entity6" "(Entity6)"]
+                       [#"Entity7" "(Entity7)"]
+                       [#"Entity8" "(Entity8)"]
+                       [#"Entity9" "(Entity9)"] ]]
+    (reduce #(apply clojure.string/replace %1 %2) string replacements)))
+; TODO you can do this way more elegantly!

@@ -1,11 +1,16 @@
 
 Reasoner 
 
-- (modify ...) should check whether the two predicates are compatible w.r.t. the ontology
-- Oracle of Delphi: (Sel. ...) resulting from has/with
-- rank possible instantiations
+* (modify ...) should check whether the two predicates are compatible w.r.t. the ontology
+* Oracle of Delphi: (Sel. ...) resulting from has/with
+* rank possible instantiations/interpretations
 
 
 Grammar 
 
-- "without" as negation of with_Rel
+* "without" as negation of with_Rel
+
+
+Website (/Documentation)
+
+* http://jacobian.org/writing/what-to-write/

@@ -3,21 +3,7 @@
             [core.nlu.context.short_term_memory :as stm]))
 
 
-(defn replace-entities [input entities i d] 
-  ; d is the offset deviation
-  (if (empty? entities)
-      input
-      (let [entity     (first entities)
-            form       (:form entity)
-            identifier (str "Entity" i)
-            offset     (- (read-string (:offset entity)) d)
-            new-input  (str (subs input 0 offset) (clojure.string/replace-first (subs input offset) form identifier))
-            new-d      (+ d (- (count form) 1))]
-        (do
-          ; add entity to short term memory
-          (assoc stm/entities (keyword identifier) entity)
-          ; recur
-          (replace-entities new-input (rest entities) (+ i 1) new-d)))))
+(declare replace-entities)
 
 
 ;; Main 
@@ -35,4 +21,27 @@
         ; return new-input
         new-input))))
 
-(defn resolve-entity [identifier] (:uri (get stm/entities identifier)))
+
+;; Aux
+
+(defn replace-entities [input entities i d] 
+  ; d is the offset deviation
+  (if (empty? entities)
+      input
+      (let [entity     (first entities)
+            form       (:form entity)
+            identifier (str "Entity" i)
+            offset     (- (read-string (:offset entity)) d)
+            new-input  (str (subs input 0 offset) (clojure.string/replace-first (subs input offset) form identifier))
+            new-d      (+ d (- (count form) 1))]
+        (do
+          ; add entity to short term memory
+          (swap! stm/entities assoc (keyword identifier) entity)
+          ; recur
+          (replace-entities new-input (rest entities) (+ i 1) new-d)))))
+
+
+;; Semantic definition
+
+(defn resolve-entity [identifier] 
+  (:uri (get @stm/entities identifier)))

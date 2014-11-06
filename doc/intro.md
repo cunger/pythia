@@ -1,3 +1,2 @@
-# Introduction to pythia2
+# Pythia
 
-TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
