@@ -1,5 +1,6 @@
 (ns core.definitions.Clauses_
-  (:require [core.data.LambdaRDF :refer :all])
+  (:require [core.nlu.context.short_term_memory :as stm]
+  	        [core.data.LambdaRDF :refer :all])
   (:import  [core.data.LambdaRDF Term Count Triple Not And Or Filter Quant Sel Ask Select]))
 
 
@@ -55,12 +56,12 @@
 ; (defn query_copula_whAdv [_ whadv e] ...)
 ; TODO case whadv ...
 
-(defn Who  [] (inc-fresh!) (let [v (make-var @fresh)] {:project v :var v :cond nil}))
-(defn What [] (inc-fresh!) (let [v (make-var @fresh)] {:project v :var v :cond nil}))
+(defn Who  [] (let [v (make-var "v" (stm/get-fresh!))] {:project v :var v :cond nil}))
+(defn What [] (let [v (make-var "v" (stm/get-fresh!))] {:project v :var v :cond nil}))
 
-(defn WhichSg [cn] (inc-fresh!) (let [v (make-var @fresh)] {:project v :var v :cond (cn v)}))
-(defn WhichPl [cn] (inc-fresh!) (let [v (make-var @fresh)] {:project v :var v :cond (cn v)}))
-(defn HowMany [cn] (inc-fresh!) (let [v (make-var @fresh)] {:project (Count. v) :var v :cond (cn v)}))
+(defn WhichSg [cn] (let [v (make-var "v" (stm/get-fresh!))] {:project v :var v :cond (cn v)}))
+(defn WhichPl [cn] (let [v (make-var "v" (stm/get-fresh!))] {:project v :var v :cond (cn v)}))
+(defn HowMany [cn] (let [v (make-var "v" (stm/get-fresh!))] {:project (Count. v) :var v :cond (cn v)}))
 
 ; Imperatives
 

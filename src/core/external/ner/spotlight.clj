@@ -11,6 +11,7 @@
                  (clojure.string/split string #"\,"))))
 
 ;; Main 
+;; must implement: get-entities, filter-entities
 
 (defn get-entities [input]
   (let [request  (settings/ner-request (http/urlize input))

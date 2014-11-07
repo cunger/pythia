@@ -32,7 +32,7 @@
                     ; show result
                     (do (show-output result) 
                     ; sparqlize and send query to endpoint
-                        (let [query  (sparqlize (:sem result))
+                        (let [query  (sparqlize (:expr (first (:exprs result))))
                               answer (endpoint/execute-query query)]
 
                         (println "\nAnswer(s) from " settings/sparql-endpoint ":\n")
@@ -67,6 +67,7 @@
 (defn show-output [interpretation]
   (let [ asts (:asts interpretation)
          sem  (:sem  interpretation) 
+         expr (:expr (first (:exprs interpretation)))
          lang (:lang interpretation) ]
     (do
       (println "\n-------------------------------------------------")
@@ -74,12 +75,21 @@
       (if-not (empty? asts)
         (println "\n " (apply min-key count asts))
         (println "\n None.")) 
-      (println "\n* Semantic expression:")
+      (println "\n---- Step 1 ----")
+      (println "\n* Unresolved expression:")
       (println "\n " (show sem))
       (println "\n* RDF/SPARQL:")
       (if sem 
         (println "\n " (sparqlize sem))
-        (println "\n None."))))) 
+        (println "\n None."))
+      (println "\n---- Step 2 ----")
+      (println "\n* Resolved expression:")
+      (println "\n " (show expr))
+      (println "\n* RDF/SPARQL:")
+      (if expr 
+        (println "\n " (sparqlize expr))
+        (println "\n None."))
+      ))) 
 
 
 ;; Aux 

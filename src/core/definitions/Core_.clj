@@ -1,8 +1,8 @@
 (ns core.definitions.Core_
   (:require [core.external.ner.ner :as ner]
-            [core.nlu.reasoning.oracle :as oracle]
+            [core.nlu.context.short_term_memory :as stm]
             [core.data.LambdaRDF :refer :all])
-  (:import  [core.data.LambdaRDF Term Triple Not And Filter Quant Sel Condition Ask Select]))
+  (:import  [core.data.LambdaRDF Term Triple Path Not And Filter Quant Sel Condition Ask Select]))
 
 
 ;; Core
@@ -32,7 +32,7 @@
   (fn [x] (rel x obj)))
 
 (defn existential_closure [rel]
-  (let [v (get-fresh-var!)]
+  (let  [v (make-var "v" (stm/get-fresh!))]
     (fn [x] (Quant. :some v [] [(rel v x)]))))
 
 (defn modify [pred1 pred2]
@@ -42,18 +42,18 @@
 
 (defn The_empty [e] e)
 
-(defn The  [pred] (sel pred []))
-(defn This [pred] (sel pred []))
-(defn That [pred] (sel pred []))
+(defn The  [pred] (Sel. [(Condition. :satisfy pred)]))
+(defn This [pred] (Sel. [(Condition. :satisfy pred)]))
+(defn That [pred] (Sel. [(Condition. :satisfy pred)]))
 
 (defn gq1 [quant]
   (fn [pred1 pred2]
-      (let [v (get-fresh-var!)]
+      (let [v (make-var "v" (stm/get-fresh!))]
         (Quant. quant v [(pred1 v)] [(pred2 v)]))))
 
 (defn gq2 [quant]
   (fn [pred rel]
-      (let [v (get-fresh-var!)]
+      (let [v (make-var "v" (stm/get-fresh!))]
        (fn [x] (Quant. quant v [(pred v)] [(rel x v)])))))
 
 (def Some1 (gq1 :some))
@@ -77,26 +77,6 @@
 (defn Entity8 [] (Term. :uri (ner/resolve-entity :Entity8)))
 (defn Entity9 [] (Term. :uri (ner/resolve-entity :Entity9)))
 
-; For robust parsing
-
-;(def  UnknownClass (fn [x] (Triple. x rdf-type (sel nil [(Condition. :type :class)]))))
-;(defn UnknownEntity [cn] (sel cn [(Condition. :type :individual)]))
-;(defn UnknownPredicate [cn] (fn [x] (Triple. x rdf-type (sel (fn [_] (cn x)) [(Condition. :type :class)]))))  
-;(defn UnknownRelation [cn1,cn2] (fn [x,y] (Triple. x (sel nil [(Condition. :type :property) (Condition. :domain cn1) (Condition. :range cn2)]) y)))
-
-;; Semantically light expressions
-
-(defn light_Rel [conditions] (fn [x,y] (oracle/bridge x y conditions)))
-
-(def have_Rel    (light_Rel []))
-(def with_Rel    (light_Rel []))
-(def possess_Rel (light_Rel []))
-(def in_Rel      (light_Rel [(Condition. :kind :location)]))
-(def in_Rel      (light_Rel [(Condition. :kind :origin)]))
-
-
-;;
-
 (defn constants-to-functions [string]
   (let [replacements [ [#"Entity1" "(Entity1)"]
                        [#"Entity2" "(Entity2)"]
@@ -109,3 +89,17 @@
                        [#"Entity9" "(Entity9)"] ]]
     (reduce #(apply clojure.string/replace %1 %2) string replacements)))
 ; TODO you can do this way more elegantly!
+
+; For robust parsing
+
+;(def  UnknownClass (fn [x] (Triple. x rdf-type (sel nil [(Condition. :type :class)]))))
+;(defn UnknownEntity [cn] (sel cn [(Condition. :type :individual)]))
+;(defn UnknownPredicate [cn] (fn [x] (Triple. x rdf-type (sel (fn [_] (cn x)) [(Condition. :type :class)]))))  
+;(defn UnknownRelation [cn1,cn2] (fn [x,y] (Triple. x (sel nil [(Condition. :type :property) (Condition. :domain cn1) (Condition. :range cn2)]) y)))
+
+;; Semantically light expressions
+
+(def have_Rel    (fn [x y] (Path. x y [])))
+(def with_Rel    (fn [x y] (Path. x y [])))
+(def possess_Rel (fn [x y] (Path. x y [(Condition. :kind :possess)])))
+(def in_Rel      (fn [x y] (Path. x y [(Condition. :kind [:location :time])])))

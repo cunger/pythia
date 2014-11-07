@@ -1,7 +1,8 @@
 (ns core.main
-   (:require [core.external.gf_server :as gf]
+   (:require [core.nlu.context.short_term_memory :as stm]
+             [core.external.gf_server :as gf]
              [core.external.ner.ner   :as ner]
-             [core.nlu.interpretation :refer [interpret]]))
+             [core.nlu.interpretation :refer [interpret handle]]))
 
 
 (declare parse-and-interpret)
@@ -22,17 +23,20 @@
 
 (defn parse-and-interpret [grammar normalized-input]
 
+  (stm/init!)
+
   (let [ ;; named entity recognition
          new-input (ner/recognize normalized-input)
          ;; parsing 
          parses    (gf/request-parse grammar new-input)
          ;; interpretation
          interpretations (apply concat (map interpret parses))
+         instantiated-interpretations  (map handle interpretations)
        ]
 
-    (if-not (empty? interpretations)
+    (if-not (empty? instantiated-interpretations)
       ; TODO rank interpretations
-      (first interpretations)
+      (first instantiated-interpretations)
       ; else: Partial parsing
       ; TODO (robustness/...)
     )

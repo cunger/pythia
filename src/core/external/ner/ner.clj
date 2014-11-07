@@ -36,7 +36,7 @@
             new-d      (+ d (- (count form) 1))]
         (do
           ; add entity to short term memory
-          (swap! stm/entities assoc (keyword identifier) entity)
+          (swap! stm/named-entities assoc (keyword identifier) entity)
           ; recur
           (replace-entities new-input (rest entities) (+ i 1) new-d)))))
 
@@ -44,4 +44,4 @@
 ;; Semantic definition
 
 (defn resolve-entity [identifier] 
-  (:uri (get @stm/entities identifier)))
+  (:uri (get @stm/named-entities identifier)))
