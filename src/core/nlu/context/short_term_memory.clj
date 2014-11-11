@@ -7,6 +7,8 @@
 (def named-entities (atom {}))
 (def candidates     (atom {}))
 
+(def expression     (atom nil))
+
 ;; Fresh variable supply
 
 (def fresh (atom 0))
@@ -21,6 +23,7 @@
 (defn init! []
   (reset! named-entities {})
   (reset! candidates {})
+  (reset! expression nil)
   (reset! fresh 0))
 
 

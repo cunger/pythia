@@ -13,14 +13,6 @@
   ([string] (str settings/localhost string)))
 
 
-;; Start GF server 
-
-(defn start-server []
-  (println "Starting GF server...") 
-  ; TODO check whether running. if yes, restart, else start.
-)
-
-
 ;; Check for grammars
 
 (defn loaded-grammars [] 

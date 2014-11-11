@@ -7,11 +7,12 @@
 
 
 (defn execute-query [query] 
-  (let [result (case (type-of query) 
-                     :select (:data (seabass/bounce query settings/sparql-endpoint))
-                     :ask    (seabass/ask query settings/sparql-endpoint)
-                     (println "[ERROR] Unknown type of query (seems to be neither SELECT nor ASK):" query))]
-    result))
+  (if-not (nil? query) 
+    (case (type-of query) 
+          :select (:data (seabass/bounce query settings/sparql-endpoint))
+          :ask    (seabass/ask query settings/sparql-endpoint)
+          (println "[ERROR] Unknown type of query (seems to be neither SELECT nor ASK):" query))
+    []))
 
 (defn print-answer [result]
   (doseq [r result [k v] r]

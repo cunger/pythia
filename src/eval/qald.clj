@@ -1,7 +1,7 @@
 (ns eval.qald
   (:require [settings]
             [core.main :as core]
-            [core.data.LambdaRDF :refer [sparql]]
+            [core.data.LambdaRDF :refer [show-as-sparql]]
             [applications.qa.main :as qa]
             [applications.qa.endpoint :as endpoint]
             [clojure.xml :as xml]))
@@ -37,7 +37,7 @@
                goldst-results  (endpoint/execute-query goldst-query)
                goldst-answers  (if-not (sequential? goldst-results) [goldst-results] (apply concat (map vals goldst-results)))
                interpretation  (core/dispatch :parse-and-interpret settings/grammar question-string)
-               pythia-query    (if interpretation (sparql (:sem interpretation)) nil)
+               pythia-query    (if interpretation (show-as-sparql (:sem interpretation)) nil)
                pythia-results  (if pythia-query (endpoint/execute-query pythia-query) [])
                pythia-answers  (if-not (sequential? pythia-results) [pythia-results] (apply concat (map vals pythia-results)))
                overlap         (clojure.set/intersection (set pythia-answers) (set goldst-answers))

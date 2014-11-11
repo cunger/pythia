@@ -2,7 +2,7 @@
    (:require [core.nlu.context.short_term_memory :as stm]
              [core.external.gf_server :as gf]
              [core.external.ner.ner   :as ner]
-             [core.nlu.interpretation :refer [interpret handle]]))
+             [core.nlu.interpretation :refer [interpret handle-effects]]))
 
 
 (declare parse-and-interpret)
@@ -30,14 +30,12 @@
          ;; parsing 
          parses    (gf/request-parse grammar new-input)
          ;; interpretation
-         interpretations (apply concat (map interpret parses))
-         instantiated-interpretations  (map handle interpretations)
+         interpretations       (apply concat (map interpret parses))
+         final-interpretations (map handle-effects interpretations)
        ]
 
-    (if-not (empty? instantiated-interpretations)
-      ; TODO rank interpretations
-      (first instantiated-interpretations)
+    (if-not (empty? final-interpretations)
+            (first final-interpretations))
       ; else: Partial parsing
       ; TODO (robustness/...)
-    )
   ))

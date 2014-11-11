@@ -2,7 +2,7 @@
   (:require [settings]
             [core.main :as core]
             [core.external.gf_server :as gf]
-            [core.data.LambdaRDF :refer [show sparql]]
+            [core.data.LambdaRDF :refer [show-as-code show-as-sparql]]
             [core.nlu.robustness.preprocessing :refer [normalize]]
             [applications.qa.endpoint :as endpoint]
             [clojure.java.io :as io]))
@@ -32,7 +32,7 @@
                     ; show result
                     (do (show-output result) 
                     ; sparqlize and send query to endpoint
-                        (let [query  (sparqlize (:expr (first (:exprs result))))
+                        (let [query  (sparqlize (first (:exprs result)))
                               answer (endpoint/execute-query query)]
 
                         (println "\nAnswer(s) from " settings/sparql-endpoint ":\n")
@@ -47,7 +47,6 @@
 (defn run []
 
   (println "\nPythia v2\n")
-  (gf/start-server)
 
   (let [grammar (if-not (nil? settings/grammar) settings/grammar "Application.pgf")]
     ; check grammar
@@ -67,7 +66,7 @@
 (defn show-output [interpretation]
   (let [ asts (:asts interpretation)
          sem  (:sem  interpretation) 
-         expr (:expr (first (:exprs interpretation)))
+         expr (first (:exprs interpretation))
          lang (:lang interpretation) ]
     (do
       (println "\n-------------------------------------------------")
@@ -77,14 +76,14 @@
         (println "\n None.")) 
       (println "\n---- Step 1 ----")
       (println "\n* Unresolved expression:")
-      (println "\n " (show sem))
+      (println "\n " (show-as-code sem))
       (println "\n* RDF/SPARQL:")
       (if sem 
         (println "\n " (sparqlize sem))
         (println "\n None."))
       (println "\n---- Step 2 ----")
       (println "\n* Resolved expression:")
-      (println "\n " (show expr))
+      (println "\n " (show-as-code expr))
       (println "\n* RDF/SPARQL:")
       (if expr 
         (println "\n " (sparqlize expr))
@@ -95,5 +94,5 @@
 ;; Aux 
 
 (defn sparqlize [sem]
-  (try (sparql sem)
+  (try (show-as-sparql sem)
   (catch Exception e (str "[ERROR] SPARQL serialization failed:\n" (.getMessage e)))))

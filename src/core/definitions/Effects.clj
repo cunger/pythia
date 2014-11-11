@@ -1,5 +1,6 @@
 (ns core.definitions.Effects
   (:require [core.nlu.context.short_term_memory :as stm]
+            [core.nlu.reasoning.oracle :as oracle]
             [core.data.LambdaRDF :refer :all])
   (:import  [core.data.LambdaRDF Term Triple Path Not And Or Quant Ask Select]))
 
@@ -20,15 +21,16 @@
 ;; Functions with effects 
 
 (defn sel [& conditions]
-  (let [x (make-var "x" (stm/get-fresh!))]
+  (let [i (stm/get-fresh!)]
   ; oracle/... context/...
   ; add candidates for x to stm/candidates 
   ; return x
-  x)) 
+  i)) 
 
 (defn bridge [e1 e2 & conditions]
-  (let [e (make-var "e" (stm/get-fresh!))]
-  ; oracle/...
-  ; add candidates for e to stm/candidates 
-  ; return bridge, i.e. (triple e1 p e2) or (and (triple e1 p1 v) (triple v p2 e2)) or ...
-  (Path. e1 e2 []))) 
+  (let [candidates (oracle/rank (oracle/find-paths e1 e2 conditions))
+        i (stm/get-fresh!)]
+    (if (empty? candidates)
+        (Path. e1 e2 conditions)
+        (do (swap! stm/candidates assoc i candidates)
+            (Term. :index i)))))
