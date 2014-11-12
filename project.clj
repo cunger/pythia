@@ -9,6 +9,6 @@
                  [http-kit "2.1.16"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [seabass "2.1.1"]]
-  :main ^:skip-aot start
+  :main start
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

@@ -7,14 +7,15 @@
 
 
 
-(defn sparql-path [file-name] (str "src/core/nlu/reasoning/" file-name))
+(defn sparql-path [file-name] (str "src/core/nlu/reasoning/sparql/" file-name))
 
 (defn query-for-uri [file-name uri]
   (let [query (clojure.string/replace (slurp (sparql-path file-name)) "<URI>" (str "<" uri ">"))]
-       (:data (seabass/bounce query (settings/sparql-endpoint)))))
+       (:data (seabass/bounce query settings/sparql-endpoint))))
 
 
 (declare get-most-specific-type)
+(declare frequency)
 
 
 (defn find-paths [e1 e2 conditions]
@@ -38,21 +39,24 @@
     (concat paths_a paths_b)))
 
 (defn rank [xs]
-  (let [query     (fn [x] (str "SELECT (COUNT(*) AS ?c) WHERE { " (show-as-sparql x) " }"))
-        frequency (fn [x] (:c (first (:data (seabass/bounce (query x) settings/sparql-endpoint)))))]
-  (reverse (sort-by frequency xs))))
+  (reverse (sort-by frequency xs)))
 
 
 ; Aux 
 
+(defn frequency [triple]
+  (let [query (str "SELECT (COUNT(*) AS ?c) WHERE { " (show-as-sparql triple) " }")]
+       (:c (first (:data (seabass/bounce query settings/sparql-endpoint))))))
+
 (defn get-most-specific-type [v]
-  (let [types (for [type (get-rdf-type @stm/expression v)] 
+  (let [types (for [type (get-rdf-type @stm/expression v)]
                    (case (:op type) 
                           :id (:uri type)
                           :domain (:uri (query-for-uri "domain.sparql" (:uri type)))
-                          :range  (:uri (query-for-uri "range.sparql"  (:uri type)))))]
+                          :range  (:uri (query-for-uri "range.sparql"  (:uri type)))
+                          owl-Thing))]
     (if-not (empty? types)
       (first types) ; TODO determine most specific
-      "http://www.w3.org/2002/07/owl#Thing")))
+      owl-Thing)))
 
 

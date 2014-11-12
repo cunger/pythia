@@ -36,13 +36,13 @@ incomplete concrete Core_I of Core_ = open Basic, Syntax, Extra in {
     No1   p1 p2 = basic_apply p2 (mkEntity (mkNP (mkDet no_Quant) p1.cn));
     All1  p1 p2 = basic_apply p2 (mkEntity (variants { mkNP all_Predet (mkNP aPl_Det p1.cn); 
                                                          mkNP every_Det p1.cn }));
+    Generic1 p1 p2 = basic_apply p2 (mkEntity (mkNP thePl_Det p1.cn));
 
     Some2 p r = basic_apply r (mkEntity (mkNP aSg_Det p.cn));
     No2   p r = basic_apply r (mkEntity (mkNP (mkDet no_Quant) p.cn));
     All2  p r = basic_apply r (mkEntity (variants { mkNP all_Predet (mkNP aPl_Det p.cn); 
                                                         mkNP every_Det p.cn }));
-
-    The_empty e = e;
+    Generic2 p r = basic_apply r (mkEntity (mkNP thePl_Det p.cn));
 
     The  c = mkEntity (mkNP the_Det c.cn);
     This c = mkEntity (mkNP this_Det c.cn);

@@ -1,5 +1,5 @@
 (ns start
-  (:gen-class)
+  (:gen-class :main true)
   (:require [setup.main :as setup]
             [applications.qa.main :as qa]
             [eval.qald :as qald]))

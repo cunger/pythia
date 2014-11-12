@@ -9,4 +9,5 @@ pom.xml.asc
 *.class
 /.lein-*
 /.nrepl-port
+/src/setup/lexx/target
 /src/setup/ggen/temp

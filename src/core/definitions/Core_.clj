@@ -40,8 +40,6 @@
 
 ; Determiners 
 
-(defn The_empty [e] e)
-
 (defn The  [pred] (Sel. [(Condition. :satisfy pred)]))
 (defn This [pred] (Sel. [(Condition. :satisfy pred)]))
 (defn That [pred] (Sel. [(Condition. :satisfy pred)]))
@@ -56,12 +54,14 @@
       (let [v (make-var "v" (stm/get-fresh!))]
        (fn [x] (Quant. quant v [(pred v)] [(rel x v)])))))
 
-(def Some1 (gq1 :some))
-(def Some2 (gq2 :some))
-(def All1  (gq1 :all ))
-(def All2  (gq2 :all ))
-(def No1   (gq1 :no  ))
-(def No2   (gq2 :no  ))
+(def Some1    (gq1 :some))
+(def Some2    (gq2 :some))
+(def All1     (gq1 :all ))
+(def All2     (gq2 :all ))
+(def No1      (gq1 :no  ))
+(def No2      (gq2 :no  ))
+(def Generic1 (gq1 :some))
+(def Generic2 (gq2 :some))
 
 ; TODO Only
 

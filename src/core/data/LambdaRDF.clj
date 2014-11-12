@@ -74,7 +74,7 @@
 (defrecord Triple [subj prop obj]
            Expr
            (replace-all    [this i x] (Triple. (replace-all subj i x) (replace-all prop i x) (replace-all obj i x)))
-           (get-rdf-type   [this v]   (cond (and (= prop rdf-type) (= subj v) (= (:kind obj) :uri))
+           (get-rdf-type   [this v]   (cond (and (= prop rdf-type) (= subj v))
                                             [{ :op :id :uri (:ident obj) }]
                                             (and (= (:kind prop) :uri) (= subj v))
                                             [{ :op :domain :uri (:ident prop) }]
@@ -141,8 +141,8 @@
 (defrecord Quant [q v es1 es2]
            Expr
            (replace-all    [this i x] (Quant. q (replace-all v i x) (map #(replace-all % i x) es1) (map #(replace-all % i x) es2)))
-           (get-rdf-type   [this v]   (concat (concat (map #(get-rdf-type % v) es1)) (concat (map #(get-rdf-type % v) es2))))
-           (show-as-code   [this] (str "(quant " (name q) " " (show-as-code v) " [" (join-string show-as-code " " es1) "] [" (join-string show-as-code " " es2) "])"))
+           (get-rdf-type   [this v]   (concat (apply concat (map #(get-rdf-type % v) es1)) (apply concat (map #(get-rdf-type % v) es2))))
+           (show-as-code   [this] (str "(quant " q " " (show-as-code v) " [" (join-string show-as-code " " es1) "] [" (join-string show-as-code " " es2) "])"))
            (show-as-sparql [this] (case q 
                                 :some (str (join-string show-as-sparql " " es1) " " (join-string show-as-sparql " " es2))
                                 :no   (str "FILTER NOT EXISTS { " (join-string show-as-sparql " " es1) " " (join-string show-as-sparql " " es2) " }")
