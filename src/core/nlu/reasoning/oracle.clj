@@ -3,7 +3,7 @@
             [settings]
             [core.nlu.context.short_term_memory :as stm]
             [core.data.LambdaRDF :refer :all])
-  (:import  [core.data.LambdaRDF Term Triple Path]))
+  (:import  [core.data.LambdaRDF Term Triple]))
 
 
 
@@ -38,8 +38,9 @@
     (concat paths_a paths_b)))
 
 (defn rank [xs]
-  xs)
-  ; TODO rank according to prominence (w.r.t. known arguments) in the dataset
+  (let [query     (fn [x] (str "SELECT (COUNT(*) AS ?c) WHERE { " (show-as-sparql x) " }"))
+        frequency (fn [x] (:c (first (:data (seabass/bounce (query x) settings/sparql-endpoint)))))]
+  (reverse (sort-by frequency xs))))
 
 
 ; Aux 
