@@ -4,8 +4,10 @@ concrete QuestionAnsweringDut of QuestionAnswering = ClausesDut ** QuestionAnswe
 
    oper 
 
-       give_V3 : V3 = mkV3 (mkV "tonen");
+       give_V3 : V3 = mkV3 (mkV "geven");
        show_V3 : V3 = mkV3 (mkV "tonen");
+       show_V2 : V2 = mkV2 (mkV "tonen");
        get_V2  : V2 = mkV2 (mkV "halen");
+       list_V2 : V2 = mkV2 (mkV "tonen");
 
 }

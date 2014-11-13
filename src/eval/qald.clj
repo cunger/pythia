@@ -25,7 +25,8 @@
                global-result { :local-result result
                                :recall    (/ (reduce + (for [[k v] (dissoc result :mode)] (:recall    v))) total) 
                                :precision (/ (reduce + (for [[k v] (dissoc result :mode)] (:precision v))) total)
-                               :f-measure (/ (reduce + (for [[k v] (dissoc result :mode)] (:f-measure v))) total) }] 
+                               :f-measure (/ (reduce + (for [[k v] (dissoc result :mode)] (:f-measure v))) total)
+                               :pcoverage (count (filter #(= (:parsed %) true) result)) }] 
            (println global-result))
 
          (let [question        (first questions)
@@ -37,15 +38,21 @@
                goldst-results  (endpoint/execute-query goldst-query)
                goldst-answers  (if-not (sequential? goldst-results) [goldst-results] (apply concat (map vals goldst-results)))
                interpretation  (core/dispatch :parse-and-interpret settings/grammar question-string)
+               parsed          (if (contains? interpretation :asts) true false)
                pythia-query    (if interpretation (show-as-sparql (:sem interpretation)) nil)
                pythia-results  (if pythia-query (endpoint/execute-query pythia-query) [])
                pythia-answers  (if-not (sequential? pythia-results) [pythia-results] (apply concat (map vals pythia-results)))
                overlap         (clojure.set/intersection (set pythia-answers) (set goldst-answers))
                recall          (if (empty? pythia-answers) 0 (/ (count overlap) (count goldst-answers)))
                precision       (if (empty? pythia-answers) 1 (/ (count overlap) (count pythia-answers)))
-               f-measure       (/ (* 2 precision recall) (+ precision recall))
-               updated-result  (assoc result question-id {:recall recall :precision precision :f-measure f-measure}) 
+               f-measure       (if (and (= precision 0) (= recall 0)) 0 (/ (* 2 precision recall) (+ precision recall)))
+               updated-result  (assoc result question-id {:recall recall :precision precision :f-measure f-measure :parsed parsed}) 
               ]
+
+              (println question-id question-string)
+              (println "\nInterpretation:" interpretation)
+              (println "\n-------------------------------")
+
               (recur (rest questions) updated-result))
 
       ))))

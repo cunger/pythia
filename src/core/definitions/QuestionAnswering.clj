@@ -8,5 +8,4 @@
   (let [v (make-var "v" (stm/get-fresh!))]
     (Select. v (pred v))))
 
-(defn GiveMe    [pred] (gimme pred))
-(defn GiveMeAll [pred] (gimme pred))
+(defn Get [pred] (gimme pred))

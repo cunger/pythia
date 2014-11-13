@@ -7,10 +7,13 @@
 
 
 (defn execute-query [query] 
+
   (if-not (nil? query) 
     (case (type-of query) 
-          :select (:data (seabass/bounce query settings/sparql-endpoint))
-          :ask    (seabass/ask query settings/sparql-endpoint)
+          :select (try (:data (seabass/bounce query settings/sparql-endpoint))
+                       (catch Exception e (str "[ERROR] Querying failed for:\n" query "\nError:\n" (.getMessage e))))
+          :ask    (try (seabass/ask query settings/sparql-endpoint)
+                       (catch Exception e (str "[ERROR] Querying failed for:\n" query "\nError:\n" (.getMessage e))))
           (println "[ERROR] Unknown type of query (seems to be neither SELECT nor ASK):" query))
     []))
 

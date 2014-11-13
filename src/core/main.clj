@@ -2,6 +2,7 @@
    (:require [core.nlu.context.short_term_memory :as stm]
              [core.external.gf_server :as gf]
              [core.external.ner.ner   :as ner]
+             [core.nlu.robustness.preprocessing :refer [normalize]]
              [core.nlu.interpretation :refer [interpret handle-effects]]))
 
 
@@ -21,14 +22,15 @@
 
 ;; Parsing and interpretation pipeline
 
-(defn parse-and-interpret [grammar normalized-input]
+(defn parse-and-interpret [grammar input]
 
   (stm/init!)
 
-  (let [ ;; named entity recognition
-         new-input (ner/recognize normalized-input)
+  (let [ normalized-input (normalize input)
+         ;; named entity recognition
+         final-input (ner/recognize normalized-input)
          ;; parsing 
-         parses    (gf/request-parse grammar new-input)
+         parses (gf/request-parse grammar final-input)
          ;; interpretation
          interpretations       (apply concat (map interpret parses))
          final-interpretations (map handle-effects interpretations)

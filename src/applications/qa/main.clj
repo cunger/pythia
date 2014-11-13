@@ -3,7 +3,6 @@
             [core.main :as core]
             [core.external.gf_server :as gf]
             [core.data.LambdaRDF :refer [show-as-code show-as-sparql]]
-            [core.nlu.robustness.preprocessing :refer [normalize]]
             [applications.qa.endpoint :as endpoint]
             [clojure.java.io :as io]))
 
@@ -17,8 +16,7 @@
 
 (defn interaction-loop [grammar]
   (loop [input (get-input)]
-    (let [normalized-input (normalize input)]
-      (case normalized-input
+      (case input
             ; exit condition
             "exit" (java.lang.System/exit 0)
             "quit" (java.lang.System/exit 0)
@@ -42,7 +40,7 @@
                     ; TODO lin SorryDidntUnderstand
       ))
       ; repeat
-      (recur (get-input)))))
+      (recur (get-input))))
 
 (defn run []
 

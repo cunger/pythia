@@ -53,7 +53,7 @@
            (replace-all    [this i x] (Count. (replace-all v i x)))
            (get-rdf-type   [this v] [])
            (show-as-code   [this] (str "(Count. " (show-as-code v) ")"))
-           (show-as-sparql [this] (str "COUNT(DISTINCT " (show-as-sparql v) ")")))
+           (show-as-sparql [this] (str "(COUNT(DISTINCT " (show-as-sparql v) ") AS ?c)")))
 
 
 ;; Filters
