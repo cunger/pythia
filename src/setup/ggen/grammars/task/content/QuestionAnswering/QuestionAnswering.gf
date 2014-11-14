@@ -4,4 +4,7 @@ abstract QuestionAnswering = Clauses ** {
 
      Get : Predicate -> Imperative_Imp;
 
+     WhatIsThe : Predicate -> Question_QS;
+     WhoIsThe  : Predicate -> Question_QS;
+
 }

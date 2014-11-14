@@ -32,21 +32,19 @@ incomplete concrete Core_I of Core_ = open Basic, Syntax, Extra in {
 
     ---- Determiners ----
 
-    Some1 p1 p2 = basic_apply p2 (mkEntity (mkNP aSg_Det p1.cn));
-    No1   p1 p2 = basic_apply p2 (mkEntity (mkNP (mkDet no_Quant) p1.cn));
-    All1  p1 p2 = basic_apply p2 (mkEntity (variants { mkNP all_Predet (mkNP aPl_Det p1.cn); 
-                                                         mkNP every_Det p1.cn }));
+    Some1    p1 p2 = basic_apply p2 (mkEntity (mkNP aSg_Det p1.cn));
+    No1      p1 p2 = basic_apply p2 (mkEntity (mkNP (mkDet no_Quant) p1.cn));
+    All1     p1 p2 = basic_apply p2 (mkEntity (variants { mkNP all_Predet (mkNP aPl_Det p1.cn); 
+                                                          mkNP every_Det p1.cn }));
+    The1     p1 p2 = basic_apply p2 (mkEntity (mkNP the_Det p1.cn));
     Generic1 p1 p2 = basic_apply p2 (mkEntity (mkNP aPl_Det p1.cn));
 
-    Some2 p r = basic_apply r (mkEntity (mkNP aSg_Det p.cn));
-    No2   p r = basic_apply r (mkEntity (mkNP (mkDet no_Quant) p.cn));
-    All2  p r = basic_apply r (mkEntity (variants { mkNP all_Predet (mkNP aPl_Det p.cn); 
-                                                        mkNP every_Det p.cn }));
+    Some2    p r = basic_apply r (mkEntity (mkNP aSg_Det p.cn));
+    No2      p r = basic_apply r (mkEntity (mkNP (mkDet no_Quant) p.cn));
+    All2     p r = basic_apply r (mkEntity (variants { mkNP all_Predet (mkNP aPl_Det p.cn); 
+                                                       mkNP every_Det p.cn }));
+    The2     p r = basic_apply r (mkEntity (mkNP the_Det p.cn));
     Generic2 p r = basic_apply r (mkEntity (mkNP aPl_Det p.cn));
-
-    The  c = mkEntity (mkNP the_Det c.cn);
-    This c = mkEntity (mkNP this_Det c.cn);
-    That c = mkEntity (mkNP that_Det c.cn);
 
     Only e = mkEntity (mkNP only_Predet e.np);
 

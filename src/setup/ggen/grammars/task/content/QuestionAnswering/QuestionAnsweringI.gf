@@ -28,4 +28,8 @@ incomplete concrete QuestionAnsweringI of QuestionAnswering = open Basic, Syntax
                         mkImp (mkVP list_V2 (mkNP theSg_Det p.cn));
                         mkImp (mkVP list_V2 (mkNP thePl_Det p.cn));
                       };
+
+     WhatIsThe p = mkQS (mkQCl what_IP (mkNP the_Det p.cn)); 
+     WhoIsThe  p = mkQS (mkQCl who_IP  (mkNP the_Det p.cn));
+
 }

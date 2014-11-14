@@ -1,6 +1,7 @@
 (ns core.external.ner.ner
   (:require [core.external.ner.spotlight :as spotlight]
-            [core.nlu.context.short_term_memory :as stm]))
+            [core.nlu.context.short_term_memory :as stm]
+            [core.nlu.context.long_term_memory  :as ltm]))
 
 
 (declare replace-entities)
@@ -34,11 +35,12 @@
             offset     (- (read-string (:offset entity)) d)
             new-input  (str (subs input 0 offset) (clojure.string/replace-first (subs input offset) form identifier))
             new-d      (+ d (- (count form) 1))]
-        (do
+        (if-not (some #{form} (ltm/tokens))
+          (do
           ; add entity to short term memory
           (swap! stm/named-entities assoc (keyword identifier) entity)
           ; recur
-          (replace-entities new-input (rest entities) (+ i 1) new-d)))))
+          (replace-entities new-input (rest entities) (+ i 1) new-d))))))
 
 
 ;; Semantic definition

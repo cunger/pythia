@@ -28,6 +28,8 @@
     (io/copy (io/file (str ggen/temp target ".pgf")) (io/file (str settings/gf-server-grammars target ".pgf")))
     ; 2. store definitions in semantic-definitions folder
     (spit (str settings/semantic-definitions "Domain.clj") (render/render "definitions" @signature/abstract))
+    ; 3. store tokens file in resources
+    (io/copy (io/file (str ggen/temp "tokens")) (io/file "resources/grammars/tokens"))
 
     (println "\nDone.")
     (java.lang.System/exit 0)))

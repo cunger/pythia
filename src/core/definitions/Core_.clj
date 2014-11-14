@@ -60,6 +60,8 @@
 (def All2     (gq2 :all ))
 (def No1      (gq1 :no  ))
 (def No2      (gq2 :no  ))
+(def The1     (gq1 :the))
+(def The2     (gq2 :the))
 (def Generic1 (gq1 :some))
 (def Generic2 (gq2 :some))
 

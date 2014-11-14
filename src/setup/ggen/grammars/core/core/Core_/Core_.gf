@@ -29,10 +29,10 @@ abstract Core_ = {
 
     ---- Determiners ----
 
-    Some1, All1, No1, Generic1 : Predicate -> Predicate -> Statement; -- quantifiers in subject position
-    Some2, All2, No2, Generic2 : Predicate -> Relation  -> Predicate; -- quantifiers in object  position
+    Some1, All1, No1, The1, Generic1 : Predicate -> Predicate -> Statement; -- quantifiers in subject position
+    Some2, All2, No2, The2, Generic2 : Predicate -> Relation  -> Predicate; -- quantifiers in object  position
 
-    The, This, That  : Predicate -> Entity; 
+ -- The, This, That  : Predicate -> Entity; 
  -- These, Those     : Predicate -> [Entity]; 
 
     Only : Entity -> Entity;

@@ -52,7 +52,7 @@
 (defn ner-request [input]
   (settings/language (settings/domain 
   { :dbpedia { :de (str "http://de.dbpedia.org/spotlight/rest/annotate?text=" input "&spotter=Default")
-               :en (str "http://spotlight.dbpedia.org/rest/annotate?text=" input "&spotter=Default&confidence=0.5&support=20")
+               :en (str "http://spotlight.dbpedia.org/rest/annotate?text=" input "&spotter=Default&confidence=0.5&support=20") 
                :es (str "http://spotlight.sztaki.hu:2231/rest/annotate?text=" input "&spotter=Default") }})))
 
 

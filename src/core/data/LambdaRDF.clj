@@ -134,7 +134,7 @@
 
 
 ;; Generalized quantifiers
-;; quant ::= :some | :all | :no | ...
+;; quant ::= :some | :all | :no | :the | ...
 
 (defn join-string [f s xs] (if (empty? xs) "" (apply str (concat (map (fn [x] (str (f x) s)) (drop-last xs)) (f (last xs))))))
 
@@ -145,6 +145,7 @@
            (show-as-code   [this] (str "(quant " q " " (show-as-code v) " [" (join-string show-as-code " " es1) "] [" (join-string show-as-code " " es2) "])"))
            (show-as-sparql [this] (case q 
                                 :some (str (join-string show-as-sparql " " es1) " " (join-string show-as-sparql " " es2))
+                                :the  (str (join-string show-as-sparql " " es1) " " (join-string show-as-sparql " " es2))
                                 :no   (str "FILTER NOT EXISTS { " (join-string show-as-sparql " " es1) " " (join-string show-as-sparql " " es2) " }")
                                 :all  (str (join-string show-as-sparql " " es2) " SELECT " (show-as-sparql v) " { " (join-string show-as-sparql " " es1)  " } GROUP BY " (show-as-code v)))))
 

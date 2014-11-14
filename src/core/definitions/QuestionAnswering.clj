@@ -9,3 +9,6 @@
     (Select. v (pred v))))
 
 (defn Get [pred] (gimme pred))
+
+(defn WhatIsThe [pred] (gimme pred))
+(defn WhoIsThe  [pred] (gimme pred))

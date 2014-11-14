@@ -2,6 +2,7 @@
   (:require [settings]
             [setup.utils        :as utils]
             [clostache.parser   :as clostache]
+            [clojure.java.io    :as io]
             [clojure.java.shell :as shell]))
 
 
@@ -9,6 +10,7 @@
 
 (def lexx-target     "src/setup/lexx/target/")
 (def grammars-folder "src/setup/ggen/grammars/")
+(def ggen-folder     "src/setup/ggen/")
 (def temp            "src/setup/ggen/temp/")
 
 (defn folder [pre]
@@ -97,4 +99,10 @@
           (do 
             (println "Compilation failed with the following error message:\n" (:err compiled))
             (java.lang.System/exit 1))))
+
+    ; write file with all tokens covered by the grammar to resources folder
+    (spit (io/file (str temp "tokens.sh")) 
+          (clojure.string/replace (slurp (str ggen-folder "tokens.sh")) "<GRAMMAR>" (str target ".pgf")))
+    (spit (io/file (str temp "tokens"))
+          (:out (shell/sh "sh" "tokens.sh" :dir temp)))
 ))
