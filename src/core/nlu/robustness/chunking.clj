@@ -1,6 +1,16 @@
 (ns core.nlu.robustness.chunking
-  (:require [clojure.math.combinatorics :as combo]))
+  (:require [core.nlu.context.long_term_memory :as ltm]
+            [clojure.math.combinatorics :as combo]))
 
+
+
+(declare words)
+
+(defn remove-unknown-tokens [input]
+  (let [new-input (clojure.string/join " " (filter (fn [w] (some #{w} (ltm/tokens))) (words input)))]
+    (println "Removing unknown tokens...")
+    (println "Final input:" new-input)
+    new-input))
 
 ;; aux 
 

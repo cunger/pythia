@@ -3,10 +3,12 @@
              [core.external.gf_server :as gf]
              [core.external.ner.ner   :as ner]
              [core.nlu.robustness.preprocessing :refer [normalize]]
+             [core.nlu.robustness.chunking      :refer [remove-unknown-tokens]]
              [core.nlu.interpretation :refer [interpret handle-effects]]))
 
 
 (declare parse-and-interpret)
+(declare pick-best)
 
 
 ;; Main
@@ -26,18 +28,19 @@
 
   (stm/init!)
 
-  (let [ normalized-input (normalize input)
-         ;; named entity recognition
-         final-input (ner/recognize normalized-input)
-         ;; parsing 
-         parses (gf/request-parse grammar final-input)
-         ;; interpretation
-         interpretations       (apply concat (map interpret parses))
-         final-interpretations (map handle-effects interpretations)
-       ]
+  (let [normalized-input (normalize input)
+        ;; named entity recognition
+        ner-output  (ner/recognize normalized-input)
+        final-input (remove-unknown-tokens ner-output)
+        ;; parsing
+        parses (gf/request-parse grammar final-input)
+        ;; interpretation
+        interpretations       (apply concat (map interpret parses))
+        final-interpretations (map handle-effects interpretations)]
+        
+    (pick-best final-interpretations)))
 
-    (if-not (empty? final-interpretations)
-            (first final-interpretations))
-      ; else: Partial parsing
-      ; TODO (robustness/...)
-  ))
+
+(defn pick-best [interpretations]
+  (if-not (empty? interpretations)
+          (first  interpretations)))
