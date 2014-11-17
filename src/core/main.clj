@@ -28,16 +28,17 @@
 
   (stm/init!)
 
-  (let [normalized-input (normalize input)
-        ;; named entity recognition
-        ner-output  (ner/recognize normalized-input)
-        final-input (remove-unknown-tokens ner-output)
+  (let [;; tweak input
+        normalized (normalize input)
+        ner-ed     (ner/recognize normalized)
+        cleaned    (remove-unknown-tokens ner-ed)
         ;; parsing
-        parses (gf/request-parse grammar final-input)
+        inputs (distinct [input normalized ner-ed cleaned])
+        parses (apply concat (map #(gf/request-parse grammar %) inputs)) 
         ;; interpretation
         interpretations       (apply concat (map interpret parses))
         final-interpretations (map handle-effects interpretations)]
-        
+
     (pick-best final-interpretations)))
 
 

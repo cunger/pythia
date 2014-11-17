@@ -18,8 +18,10 @@
     []))
 
 (defn print-answer [result]
-  (doseq [r result [k v] r]
-    (println "*" k v)))
+  (if (coll? result)
+      (doseq [r result [k v] r]
+             (println "*" k v))
+      (println "*" result)))
 
 
 ; AUX 

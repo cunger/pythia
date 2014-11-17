@@ -7,10 +7,7 @@
 (declare words)
 
 (defn remove-unknown-tokens [input]
-  (let [new-input (clojure.string/join " " (filter (fn [w] (some #{w} (ltm/tokens))) (words input)))]
-    (println "Removing unknown tokens...")
-    (println "Final input:" new-input)
-    new-input))
+  (clojure.string/join " " (filter (fn [w] (some #{w} (ltm/tokens))) (words input))))
 
 ;; aux 
 
