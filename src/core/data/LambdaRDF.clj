@@ -33,10 +33,10 @@
                    :literal (str "(Term. :literal \"" ident "\")")))
            (show-as-sparql [this]
              (case kind 
-                   :uri    (str "<" ident ">")
-                   :var    (str "?" ident)
-                   :index  (str "?" ident)
-                   :literal ident)))
+                   :uri     (str "<" ident ">")
+                   :var     (str "?" ident)
+                   :index   (str "?" ident)
+                   :literal (str "\"" ident "\""))))
 
 
 (defn make-var [c n] (Term. :var (str c n)))

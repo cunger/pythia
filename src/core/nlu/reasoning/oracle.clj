@@ -3,7 +3,7 @@
             [settings]
             [core.nlu.context.short_term_memory :as stm]
             [core.data.LambdaRDF :refer :all])
-  (:import  [core.data.LambdaRDF Term Triple]))
+  (:import  [core.data.LambdaRDF Term Triple Filter]))
 
 
 
@@ -40,6 +40,8 @@
 
 (defn rank [xs]
   (reverse (sort-by frequency xs)))
+
+(defn eq-path [e1 e2] (Filter. :equals e1 e2))
 
 
 ; Aux 

@@ -1,5 +1,6 @@
 (ns core.external.ner.ner
   (:require [core.external.ner.spotlight :as spotlight]
+            [core.external.ner.fox       :as fox]
             [core.nlu.context.short_term_memory :as stm]
             [core.nlu.context.long_term_memory  :as ltm]))
 
@@ -10,7 +11,9 @@
 ;; Main 
 
 (defn recognize [input]
-  (let [entities  (spotlight/filter-entities (spotlight/get-entities input))
+  (let [spotlight (spotlight/filter-entities (spotlight/get-entities input))
+        fox       (fox/filter-entities (fox/get-entities input))
+        entities  (concat spotlight fox) ; TODO filter duplicates (based on :form)
         new-input (replace-entities input entities 1 0)]
     (if (empty? entities)
         input

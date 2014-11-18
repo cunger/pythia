@@ -5,16 +5,21 @@
 
 
 
-(defn type-list [string]
-  (map #(clojure.string/replace % "DBpedia:" "http://dbpedia.org/ontology/") 
-        (filter #(.startsWith % "DBpedia:") 
-                 (clojure.string/split string #"\,"))))
+(declare type-list)
+
+
+(defn http-request [input]
+  (settings/language (settings/domain 
+  { :dbpedia { :de (str "http://de.dbpedia.org/spotlight/rest/annotate?text=" input "&spotter=Default")
+               :en (str "http://spotlight.dbpedia.org/rest/annotate?text=" input "&spotter=Default&confidence=0.5&support=20") 
+               :es (str "http://spotlight.sztaki.hu:2231/rest/annotate?text=" input "&spotter=Default") }})))
+
 
 ;; Main 
 ;; must implement: get-entities, filter-entities
 
 (defn get-entities [input]
-  (let [request  (settings/ner-request (http/urlize input))
+  (let [request  (http-request (http/urlize input))
         response (http/get-response request identity)
         status   (:status response)
         body     (if-not (clojure.string/blank? (:body response)) (json/read-str (:body response)))]
@@ -29,11 +34,17 @@
         
         [])))
 
+
+;; Aux
+
+(defn type-list [string]
+  (map #(clojure.string/replace % "DBpedia:" "http://dbpedia.org/ontology/") 
+        (filter #(.startsWith % "DBpedia:") 
+                 (clojure.string/split string #"\,"))))
+
 (defn filter-entities [entities]
   (remove #(or (empty? (:types %))
                (some #{"http://dbpedia.org/ontology/TopicalConcept"} (:types %)))
           entities))
-
-;; Aux
 
 (defn most-general-type [entity] (clojure.string/replace (last (:types entity)) "http://dbpedia.org/ontology/" ""))

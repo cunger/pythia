@@ -15,6 +15,8 @@
 
   (let [xml-doc (xml/parse question-set-train)]
 
+  (try 
+
     (loop [questions (:content xml-doc) 
            result    {:mode :train}]
      
@@ -28,6 +30,7 @@
                                :f-measure (/ (reduce + (for [[k v] (dissoc result :mode)] (:f-measure v))) total)
                                :pcoverage (count (filter #(= (:parsed %) true) result)) }] 
            (println global-result))
+
 
          (let [question        (first questions)
                question-id     (:id (:attrs question))
@@ -55,5 +58,7 @@
 
               (recur (rest questions) updated-result))
 
-      ))))
+      ))
 
+      (catch Exception e (str "Oooooops!\n" (.getMessage e))))
+))

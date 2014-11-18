@@ -29,8 +29,8 @@
 
 (defn bridge [e1 e2 & conditions]
   (let [candidates (oracle/rank (oracle/find-paths e1 e2 conditions))
+        instantiations (if-not (empty? candidates) candidates [(oracle/eq-path e1 e2) (Path. e1 e2 conditions)]) 
         i (stm/get-fresh!)]
-    (if (empty? candidates)
-        (Path. e1 e2 conditions)
-        (do (swap! stm/candidates assoc i candidates)
-            (Term. :index i)))))
+
+        (do (swap! stm/candidates assoc i instantiations)
+            (Term. :index i))))
