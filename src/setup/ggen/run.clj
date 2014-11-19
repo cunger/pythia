@@ -26,7 +26,7 @@
 
 ;; AUX
 
-(def domain-grammar-files (filter #(utils/file-name-matches? #"Domain.*\.gf" %) (utils/files-in lexx-target)))
+(def domain-grammar-files   (filter #(utils/file-name-matches? #"Domain.*\.gf" %) (utils/files-in lexx-target)))
 
 (defn find-languages []
   (for [f domain-grammar-files]
@@ -72,6 +72,14 @@
           (spit (str temp (clojure.string/replace pre "_" "") language ".gf")
                 (clostache/render-resource concrete { :extensions (extensions pre) :language language })))))
     )
+   ; Fallback + Chunk
+    (doseq [f (filter #(relevant? % "Chunk" languages) (utils/files-in (str grammars-folder "chunk/")))]
+      (utils/copy-to f temp))
+    (doseq [f (filter #(or (relevant? % "Fallback"   languages)
+                           (relevant? % "Extensions" languages)
+                           (relevant? % "Dictionary" languages)) 
+                       (utils/files-in (str grammars-folder "fallback/")))]
+      (utils/copy-to f temp))        
     ; Application 
     (let [c       { :target target :startcat settings/startcat } 
           c-tc    (if settings/task-content  (assoc c    :task-content  settings/task-content)  c) 
@@ -102,7 +110,11 @@
 
     ; write file with all tokens covered by the grammar to resources folder
     (spit (io/file (str temp "tokens.sh")) 
-          (clojure.string/replace (slurp (str ggen-folder "tokens.sh")) "<GRAMMAR>" (str target ".pgf")))
+          (clostache/render-resource (str ggen-folder "tokens.mustache") { :target (str target ".pgf") }))
+    (spit (io/file (str temp "tokens_fallback.sh")) 
+          (clostache/render-resource (str ggen-folder "tokens_fallback.mustache") { :languages languages }))    
     (spit (io/file (str temp "tokens"))
           (:out (shell/sh "sh" "tokens.sh" :dir temp)))
+    (spit (io/file (str temp "tokens_fallback"))
+          (:out (shell/sh "sh" "tokens_fallback.sh" :dir temp)))
 ))

@@ -12,8 +12,8 @@
 
 (defn recognize [input]
   (let [spotlight (spotlight/filter-entities (spotlight/get-entities input))
-        fox       (fox/filter-entities (fox/get-entities input))
-        entities  (concat spotlight fox) ; TODO filter duplicates (based on :form)
+      ; fox       (fox/filter-entities (fox/get-entities input))
+        entities  spotlight ; (concat spotlight fox) ; TODO filter duplicates (based on :form)
         new-input (replace-entities input entities 1 0)]
     (if (empty? entities)
         input

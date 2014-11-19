@@ -31,9 +31,11 @@
   (let [;; tweak input
         normalized (normalize input)
         ner-ed     (ner/recognize normalized)
-        cleaned    (remove-unknown-tokens ner-ed)
+        cleaned    (remove-unknown-tokens ner-ed false) ; remove all tokens not in application grammar 
+        stripped   (remove-unknown-tokens ner-ed true)  ; remove all tokens neither in application nor fallback grammar
+        ; TODO this also removes, e.g., numbers (which it shouldn't)
         ;; parsing
-        inputs (distinct [input normalized ner-ed cleaned])
+        inputs (distinct [input normalized ner-ed cleaned stripped])
         parses (apply concat (map #(gf/request-parse grammar %) inputs)) 
         ;; interpretation
         interpretations       (apply concat (map interpret parses))

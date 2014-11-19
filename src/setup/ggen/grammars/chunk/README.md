@@ -1,0 +1,1 @@
+This grammar is forked from the [GF](http://grammaticalframework.org) repository ([lib/src/chunk](http://grammaticalframework.org/lib/src/chunk/)) and only slightly adapted.

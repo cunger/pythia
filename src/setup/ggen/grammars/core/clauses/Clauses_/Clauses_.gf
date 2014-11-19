@@ -13,7 +13,7 @@ abstract Clauses_ = Core ** {
     Question_QS;
     Imperative_Imp;
 
-    Utterance_Utt;
+    Phrase_Phr;
 
 
  fun 
@@ -63,8 +63,8 @@ abstract Clauses_ = Core ** {
 
     ---- Utterances ----
 
-    say     : Sentence_S     -> Utterance_Utt;
-    ask     : Question_QS    -> Utterance_Utt;
-    prompt  : Imperative_Imp -> Utterance_Utt;
+    say     : Sentence_S     -> Phrase_Phr;
+    ask     : Question_QS    -> Phrase_Phr;
+    prompt  : Imperative_Imp -> Phrase_Phr;
 
 }

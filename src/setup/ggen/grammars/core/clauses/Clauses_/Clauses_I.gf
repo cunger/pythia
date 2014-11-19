@@ -10,7 +10,7 @@ incomplete concrete Clauses_I of Clauses_ = Core_I ** open Basic, Syntax in {
     Sentence_S     = S;
     Question_QS    = QS;
     Imperative_Imp = Imp;
-    Utterance_Utt  = Utt;
+    Phrase_Phr     = Phr;
 
     WhPron = IP;
     WhAdv  = IAdv; 
@@ -78,10 +78,10 @@ incomplete concrete Clauses_I of Clauses_ = Core_I ** open Basic, Syntax in {
     HowMany p = mkIP how8many_IDet p.cn;
 
 
-    ---- Utterances ----
+    ---- Phrases ----
 
-    say     s = mkUtt s;
-    ask     q = mkUtt q;
-    prompt  i = mkUtt i;
+    say     s = mkPhr s;
+    ask     q = mkPhr q;
+    prompt  i = mkPhr i;
 
 }

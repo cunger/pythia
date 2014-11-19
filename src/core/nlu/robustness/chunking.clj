@@ -6,8 +6,9 @@
 
 (declare words)
 
-(defn remove-unknown-tokens [input]
-  (clojure.string/join " " (filter (fn [w] (some #{w} (ltm/tokens))) (words input))))
+(defn remove-unknown-tokens [input also-fallback?]
+  (let [to-remove (if also-fallback? (concat (ltm/tokens) (ltm/tokens_fallback)) (ltm/tokens))]
+       (clojure.string/join " " (filter (fn [w] (some #{w} to-remove))) (words input))))
 
 ;; aux 
 
