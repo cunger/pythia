@@ -20,17 +20,20 @@
 
 (defn get-entities [input]
   (let [request  (http-request (http/urlize input))
-        response (http/get-response request identity)
-        status   (:status response)
-        body     (if-not (clojure.string/blank? (:body response)) (json/read-str (:body response)))]
+        response (http/get-response :get request {:headers {"accept" "application/json"}} identity)
+        status   (:status response)]
 
-    (if (and (= status 200) (contains? body "Resources"))
+    (if (= status 200) 
+
+        (let [body (json/read-str (:body response))]
+
+             (if (contains? body "Resources")
         
-        (for [resource (get body "Resources")]
-             { :uri    (get resource "@URI" ) 
-               :form   (get resource "@surfaceForm")
-               :offset (get resource "@offset")
-               :types  (type-list (get resource "@types"))})
+                 (for [resource (get body "Resources")]
+                      { :uri    (get resource "@URI" ) 
+                        :form   (get resource "@surfaceForm")
+                        :offset (get resource "@offset")
+                        :types  (type-list (get resource "@types"))})))
         
         [])))
 

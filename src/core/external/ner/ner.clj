@@ -12,8 +12,8 @@
 
 (defn recognize [input]
   (let [spotlight (spotlight/filter-entities (spotlight/get-entities input))
-      ; fox       (fox/filter-entities (fox/get-entities input))
-        entities  spotlight ; (concat spotlight fox) ; TODO filter duplicates (based on :form)
+        fox       (fox/filter-entities (fox/get-entities input))
+        entities  fox ; (concat spotlight fox) ; TODO filter duplicates (based on :form)
         new-input (replace-entities input entities 1 0)]
     (if (empty? entities)
         input
@@ -29,7 +29,7 @@
 ;; Aux
 
 (defn replace-entities [input entities i d] 
-  ; d is the offset deviation
+  ; d is the offset deviation 
   (if (empty? entities)
       input
       (let [entity     (first entities)

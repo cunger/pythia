@@ -17,7 +17,7 @@
 
 (defn loaded-grammars [] 
   (let [request (build-request "grammars.cgi")
-        gs (http/get-response request http/get-body)]
+        gs (http/get-response :get request [] http/get-body)]
     (if gs gs [])))
 
 (defn check-for-grammar [g]
@@ -46,7 +46,7 @@
 (defn request-parse [grammar string]
 
   (let [request (build-request grammar (str "?command=parse&input=" (http/urlize string)))
-        result  (http/get-response request :body)]
+        result  (http/get-response :get request [] :body)]
 
     (if-not (nil? result)
       (for [r (json/read-str result)] 
@@ -61,7 +61,7 @@
 (defn request-linearization [grammar tree]
   
   (let [request  (build-request grammar (str "?command=linearize&tree=" (http/urlize tree)))
-        response (http/get-response request :body)]
+        response (http/get-response :get request [] :body)]
      (get (first (json/read-str response)) "text")))
 
 (defn useful? [lin]
@@ -77,7 +77,7 @@
 
   (loop  [grammar  grammar]
     (let [request  (build-request grammar "?command=random")
-          response (http/get-response request http/get-body)
+          response (http/get-response :get request [] http/get-body)
           random   (get (first response) "tree")
           lin      (request-linearization grammar random)]
       (if (useful? lin) 

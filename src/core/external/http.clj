@@ -5,8 +5,12 @@
 
 (defn urlize [string] (clojure.string/replace string " " "+"))
 
-(defn get-response [request postprocessing] 
-  (let [response (client/get request {:headers {"Accept" "application/json"}})]
+(defn get-response [method request options postprocessing] 
+  (let [response (case method 
+                       :get  (if (empty? options)
+                                 (client/get request)
+                                 (client/get request options))
+                       :post (client/post request options))]
     (postprocessing @response)))
 
 (def get-body (comp json/read-str :body))

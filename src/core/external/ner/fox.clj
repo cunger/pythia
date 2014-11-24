@@ -1,49 +1,61 @@
 (ns core.external.ner.fox
   (:require [settings]
             [core.external.http :as http]
-            [clojure.data.json  :as json]))
+            [clojure.data.json  :as json]
+            [clojure.java.shell :as shell]))
 
 
 
 (declare type-list)
-
-
-(defn http-request [input]
-  (settings/language (settings/domain 
-  { :dbpedia { :en (str "http://139.18.2.164:4444/call/ner/entities?input=" input "&type=text&task=ner") }})))
+(declare http-request)
+(declare curl)
 
 
 ;; Main 
 ;; must implement: get-entities, filter-entities
 
 (defn get-entities [input]
-  (let [request  (http-request (http/urlize input))
-        response (http/get-response request identity)
-        status   (:status response)
-        body     (if-not (clojure.string/blank? (:body response)) (json/read-str (:body response)))]
-
-    ; (do
-    ; (println ">>>>>" response) 
+  (let [response (http-request input)
+        status   (:status response)]
 
     (if (= status 200)
-      
-        (for [resource body]
-             { :uri    (get resource "means" ) 
-               :form   (get resource "ann:body")
-               :offset (get resource "beginIndex")
-               :types  (type-list (get resource "@type"))})
-        
-        []))) ; )
 
+        (let [body (java.net.URLDecoder/decode (:body response))
+              json-readable (clojure.string/replace (clojure.string/replace body (re-pattern "\"\\{") "{") (re-pattern "\\}\"") "}")
+              json-result   (json/read-str json-readable)
+              output        (get json-result "output")
+              resources     (if (contains? output "@graph")
+                                (get output "@graph")
+                                [output])]
+
+             (for [resource resources]
+                  { :uri    (get resource "means" ) 
+                    :form   (get resource "ann:body")
+                    :offset (get resource "beginIndex")
+                    :types  (type-list (get resource "@type"))}))
+        
+        [])
+    ))
+
+
+;; Request 
+
+(defn http-request [input]
+  (http/get-response :post "http://139.18.2.164:4444/api" 
+  { :headers { "content-type" "application/json" 
+               "accept" "application/json" }
+    :body    (json/json-str { :input  input
+                              :type   "text"
+                              :task   "ner" 
+                              :output "JSON-LD" })} 
+  identity))
 
 ;; Aux
 
 (defn type-list [types]
-  (map #(clojure.string/replace % "scmsann:" "") types))
+  (remove #(= % "ann:Annotation") (map #(clojure.string/replace % "scmsann:" "") types)))
 
 (defn filter-entities [entities]
-  (remove #(or (empty? (:types %))
-               (some #{"ann:Annotation"} (:types %)))
-          entities))
+  entities)
 
 (defn most-general-type [entity] (clojure.string/replace (last (:types entity)) "http://dbpedia.org/ontology/" ""))
