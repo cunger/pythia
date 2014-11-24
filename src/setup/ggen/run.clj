@@ -72,14 +72,9 @@
           (spit (str temp (clojure.string/replace pre "_" "") language ".gf")
                 (clostache/render-resource concrete { :extensions (extensions pre) :language language })))))
     )
-   ; Fallback + Chunk
+   ; Chunk
     (doseq [f (filter #(relevant? % "Chunk" languages) (utils/files-in (str grammars-folder "chunk/")))]
-      (utils/copy-to f temp))
-    (doseq [f (filter #(or (relevant? % "Fallback"   languages)
-                           (relevant? % "Extensions" languages)
-                           (relevant? % "Dictionary" languages)) 
-                       (utils/files-in (str grammars-folder "fallback/")))]
-      (utils/copy-to f temp))        
+      (utils/copy-to f temp))  
     ; Application 
     (let [c       { :target target :startcat settings/startcat } 
           c-tc    (if settings/task-content  (assoc c    :task-content  settings/task-content)  c) 

@@ -7,7 +7,8 @@
   (clojure.string/split (slurp "resources/grammars/tokens") #"\s"))
 
 (defn tokens_fallback [] ; :: [Str]
-  (clojure.string/split (slurp "resources/grammars/tokens_fallback") #"\s"))
+  [])
+  ; (clojure.string/split (slurp "resources/grammars/tokens_fallback") #"\s"))
 
 
 ;; Print

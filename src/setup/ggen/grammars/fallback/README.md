@@ -1,1 +1,0 @@
-This grammar is forked from the [GF](http://grammaticalframework.org) repository ([lib/src/translator](http://grammaticalframework.org/lib/src/translator/)) and only slightly adapted.
