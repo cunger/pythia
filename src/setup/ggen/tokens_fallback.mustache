@@ -1,7 +1,0 @@
-#!/bin/bash
-
-echo "{{#languages}}
-import Dictionary{{.}}
-{{/languages}}
-pg-words" >> tokens_fallback.gfs
-gf --run <tokens_fallback.gfs

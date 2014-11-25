@@ -1,1 +1,1 @@
-concrete ChunkGer of Chunk = CoreGer, ClausesGer ** ChunkI with (Basic = BasicGer), (Syntax = SyntaxGer), (Paradigms = ParadigmsGer);
+concrete ChunkGer of Chunk = CoreGer, ClausesGer ** ChunkI with (Basic = BasicGer), (Syntax = SyntaxGer);

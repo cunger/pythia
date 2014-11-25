@@ -1,1 +1,1 @@
-concrete ChunkSpa of Chunk = CoreSpa, ClausesSpa ** ChunkI with (Basic = BasicSpa), (Syntax = SyntaxSpa), (Paradigms = ParadigmsSpa);
+concrete ChunkSpa of Chunk = CoreSpa, ClausesSpa ** ChunkI with (Basic = BasicSpa), (Syntax = SyntaxSpa);

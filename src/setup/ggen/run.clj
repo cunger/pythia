@@ -104,12 +104,8 @@
             (java.lang.System/exit 1))))
 
     ; write file with all tokens covered by the grammar to resources folder
-    (spit (io/file (str temp "tokens.sh")) 
-          (clostache/render-resource (str ggen-folder "tokens.mustache") { :target (str target ".pgf") }))
-    (spit (io/file (str temp "tokens_fallback.sh")) 
-          (clostache/render-resource (str ggen-folder "tokens_fallback.mustache") { :languages languages }))    
-    (spit (io/file (str temp "tokens"))
+    (spit (str temp "tokens.sh")
+          (clojure.string/replace (slurp (str ggen-folder "tokens.mustache")) #"GRAMMAR" (str target ".pgf"))) 
+    (spit (str temp "tokens")
           (:out (shell/sh "sh" "tokens.sh" :dir temp)))
-    (spit (io/file (str temp "tokens_fallback"))
-          (:out (shell/sh "sh" "tokens_fallback.sh" :dir temp)))
 ))

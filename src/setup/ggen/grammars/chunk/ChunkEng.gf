@@ -1,1 +1,1 @@
-concrete ChunkEng of Chunk = CoreEng, ClausesEng ** ChunkI with (Basic = BasicEng), (Syntax = SyntaxEng), (Paradigms = ParadigmsEng);
+concrete ChunkEng of Chunk = CoreEng, ClausesEng ** ChunkI with (Basic = BasicEng), (Syntax = SyntaxEng);

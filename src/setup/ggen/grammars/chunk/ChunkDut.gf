@@ -1,1 +1,1 @@
-concrete ChunkDut of Chunk = CoreDut, ClausesDut ** ChunkI with (Basic = BasicDut), (Syntax = SyntaxDut), (Paradigms = ParadigmsDut);
+concrete ChunkDut of Chunk = CoreDut, ClausesDut ** ChunkI with (Basic = BasicDut), (Syntax = SyntaxDut);

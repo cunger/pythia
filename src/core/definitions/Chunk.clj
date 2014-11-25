@@ -11,8 +11,23 @@
 (defn PlusChunk [c cs] (cons c cs))
 (defn ChunkPhr  [cs]   (utils/wrap And. cs))
 
-(defn Class_Chunk     [c] (fn [x] (Triple. x rdf-type c)))
-(defn Entity_Chunk    [e] e)
-(defn Predicate_Chunk [p] (fn [x] (p x)))
-(defn Relation_Chunk  [r] (fn [x y] (r x y)))
+
+(defn Class_Chunk [c] 
+  (let [x (make-var "e" (stm/get-fresh!))] 
+       (Triple. x rdf-type c)))
+
+(defn Predicate_Chunk [p] 
+  (let [x (make-var "e" (stm/get-fresh!))] 
+       (p x)))
+
+(defn Relation_Chunk [r] 
+  (let [x (make-var "e" (stm/get-fresh!))
+        y (make-var "e" (stm/get-fresh!))] 
+       (r x y)))
+
+(defn Entity_Chunk [e] 
+  (let [x (make-var "e" (stm/get-fresh!))
+        p (make-var "p" (stm/get-fresh!))] 
+       (Or. (Triple. x p e) (Triple. e p x))))
+
 (defn Statement_Chunk [s] s)
