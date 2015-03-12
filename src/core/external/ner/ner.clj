@@ -11,9 +11,9 @@
 ;; Main 
 
 (defn recognize [input]
-  (let [spotlight (spotlight/filter-entities (spotlight/get-entities input))
+  (let [;spotlight (spotlight/filter-entities (spotlight/get-entities input))
         fox       (fox/filter-entities (fox/get-entities input))
-        entities  fox ; (concat spotlight fox) ; TODO filter duplicates (based on :form)
+        entities  fox ; (concat spotlight fox) with filtering duplicates (based on :form)
         new-input (replace-entities input entities 1 0)]
     (if (empty? entities)
         input
@@ -35,7 +35,7 @@
       (let [entity     (first entities)
             form       (:form entity)
             identifier (str "Entity" i)
-            offset     (- (read-string (:offset entity)) d)
+            offset     (println (:offset entity) (- (read-string (:offset entity)) d)) ; DEBUG
             new-input  (str (subs input 0 offset) (clojure.string/replace-first (subs input offset) form identifier))
             new-d      (+ d (- (count form) 1))]
         (if-not (some #{form} (ltm/tokens))

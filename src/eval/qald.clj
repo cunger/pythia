@@ -15,7 +15,7 @@
 
   (let [xml-doc (xml/parse question-set-train)]
 
-  (try 
+  ;(try 
 
     (loop [questions (:content xml-doc) 
            result    {:mode :train}]
@@ -60,5 +60,5 @@
 
       ))
 
-      (catch Exception e (str "Oooooops!\n" (.getMessage e))))
+      ;(catch Exception e (str "Oooooops!\n" (.getMessage e))))
 ))

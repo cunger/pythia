@@ -26,7 +26,7 @@
               output        (get json-result "output")
               resources     (if (contains? output "@graph")
                                 (get output "@graph")
-                                [output])]
+                                [])]
 
              (for [resource resources]
                   { :uri    (get resource "means" ) 
